@@ -1,0 +1,46 @@
+  _   _ U _____ u _      ____
+ |'| |'|\| ___"|/|"|   U|  _"\ u
+/| |_| |\|  _|"U | | u \| |_) |/
+U|  _  |u| |___ \| |/__ |  __/
+ |_| |_| |_____| |_____||_|
+ //   \\ <<   >> //  \\ ||>>_
+(_") ("_)__) (__)_")("_)__)__)
+
+Este repositório será utilizado para extender o núcleo do framework. Todas as
+classes utilizadas nesta pasta deverá ser uma extensão ou uma nova funcionalidade
+do framework.
+
+As regras para criação de classes neste repositório seguem abaixo:
+ - O nome da Classe deve ser seguido do prefixo Ext
+ - O nome do arquivo dentro da pasta deve ser ext_ seguido do nome da classe sem
+o prefíxo
+ - A classe não precisa, obrigatóriamente, ser filha de alguma classe do núcleo
+
+Para exemplo de uma extensão implementa-se abaixo uma classe do tipo extensiva:
+
+// nome do arquivo ext_action.php
+
+<?php
+
+class ActionExt extends Ibe_Action{
+
+    public function execute(Ibe_Request $req){
+        if($req->isParamEquals('data',date('d/m/Y'))){
+            $this->runNow();
+        }else{
+            $this->run();
+        }
+    }
+
+    abstract protected function runNow();
+    abstract protected function run();
+}
+
+?>
+
+A lógica interna funciona da seguinte forma:
+
+- Uma classe extensão é chamada
+- O auto load identifica que a classe é uma extensão
+- O auto load verifica a existência dessa classe no repositório _extensions
+- Se a classe existir e dentro dos padrões corretos ele realiza o include

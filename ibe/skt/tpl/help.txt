@@ -1,0 +1,195 @@
+    wWw ()_()        \\\    /// wWw (O))  ((O)    .-.   ()_()       _
+    (O)_(O o)    /)  ((O)  (O)) (O)_ ||    ||   c(O_O)c (O o)(OO) .' )
+    / __)|^_\  (o)(O) | \  / |  / __)|| /\ ||  ,'.---.`, |^_\ ||_/ .'
+   / (   |(_))  //\\  ||\\//|| / (   ||//\\|| / /|_|_|\ \|(_))|   /
+  (  _)  |  /  |(__)| || \/ ||(  _)  / /  \ \ | \_____/ ||  / ||\ \
+  / /    )|\\  /,-. | ||    || \ \_ ( /    \ )'. `---' .`)|\\(/\)\ `.
+  )/    (/  \)-'   ''(_/    \_) \__) )      (   `-...-' (/  \)    `._)
+
+A estrutura do framework funciona da seguinte maneira:
+
++-- application
+        +-- _extensions
+        +-- _forms
+        +-- _maps
+        +-- _plugins
+        +-- _rsc
+             +-- css
+             +-- img
+             +-- js
+             +-- upload
+       +-- modules    // Este nome é configuravel no index.php
+            +-- nomeDoModulo
+                +-- nomeDoControlador
+                    +-- _actions // contem as ações do controlador
+                    +-- _views // contem os layouts dos controladores
+                +-- inc_configure.php //configuração do modulo
+                +-- inc_views.php //layout padrao de todos os controles do modulo
+            +-- inc_views.php //layout padrao de todos os módulos
+
+O funcionamento do framework ocorre conceitualmente da seguinte maneira:
+ - O usuario realiza a requisição ao aplicativo
+ - O sistema verifica a requisição e decodifica a url para executar a acao desejada
+ - O núcleo capura o cabecalho http e trata as variáveis passadas por POST e GET
+ - O sistema instância um objeto Ibe_Request e atribui as variáveis tratadas ao
+objeto Ibe_Request
+ - Antes de executar a ação o núcleo faz a verificação e leitura da classe de
+configuração do núcleo
+ - Posteriormente é verificado a permissão do usuário para a ação requisitada
+ - A seguir, o núcleo executa o método preAction da ação
+ - O processo continua com a execução do método execute que deve ser implementado
+Este método funciona como o papel de um controlador tomando-se por base a
+arquitetura de sistemas MVC.
+ - Ao finalizar a execução do método execute o sistema chama o método posAction
+ - Baseado no retorno do método execute o sistema monta a hierarquia das screens
+
+A hierarquia das screens funciona da seguinte maneira quando a estrutura abaixo
+estiver disponível:
+ .....
+       +-- modules
+            ....
+            +-- nomeDoModulo
+                +-- nomeDoControlador
+                    ........
+                    +-- _views
+                        +-- inc_index.php
+                +-- inc_views.php
+            +-- inc_views.php
+
+- Quando a ação  (método execute) retorna um Ibe_Layout::APPLICATION :
+
+     modules/inc_views.php
+     |
+     |-->Dentro é inserido: modules/nomeDoModule/inc_views.php
+         |
+         |-->Dentro é inserido: modules/nomeDoModule/_views/inc_nomeDaAcao.php
+
+Ou seja
+                      Contém                  Contém
+    layoutDaAplicacao-------->layoutDoModulo---------->layoutDaAcao
+
+- Quando a ação  (método execute) retorna um Ibe_Layout::CONTROLLER :
+
+      modules/nomeDoModule/inc_views.php
+      |
+      |-->Dentro é inserido: modules/nomeDoModule/_views/inc_nomeDaAcao.php
+
+Ou seja
+                    Contém
+    layoutDoModulo---------->layoutDaAcao
+
+ - Quando a ação  (método execute) retorna um Ibe_Layout::ACTION :
+
+     modules/nomeDoModule/_views/inc_nomeDaAcao.php
+
+Ou seja
+
+    layoutDaAcao
+
+ - Quando a ação  (método execute) retorna um Ibe_Layout::NONE :
+
+ Nenhuma tela será montada na tela do usuário.
+
+
+           c  c(o)__(o)wW  Ww    .-.   \\\  ///  oo_
+    /)     (OO)(__  __)(O)(O)  c(O_O)c ((O)(O)) /  _)-<
+  (o)(O) ,'.--.) (  )   (..)  ,'.---.`, | \ ||  \__ `.
+   //\\ / //_|_\  )(     ||  / /|_|_|\ \||\\||     `. |
+  |(__)|| \___   (  )   _||_ | \_____/ ||| \ |     _| |
+  /,-. |'.    )   )/   (_/\_)'. `---' .`||  ||  ,-'   |
+ -'   ''  `-.'   (             `-...-' (_/  \_)(_..--'
+
+
+As actions são as classe que exercem o papel do controlador, levando-se em
+consideração que o framework implementa a arquitetura MVC.
+Todas as actions devem extender da classe pai Ibe_Action, e obrigatoriamente,
+implementar o método execute.
+A assinatura do método execute deve ser a seguinte:
+
+
+    /**
+     * Método que implementa a acao lógica do aplicativo
+     * Este metodo será executado quando o usuário
+     * realizar uma requisicao via URL ao aplicativo.
+     * É identificado como o terceiro parametro da URL ou o valor padrao
+     *
+     * http://localhost/index.php/module/controller/action
+     *
+     * @return int
+     */
+    abstract public function execute(Ibe_request $req);
+
+
+A figura abaixo demonstra o funcionamento do framework:
+
+   -----
+   | U |
+   | S |                -------                     -------
+   | E |                |  R  |                     |  A  |
+ ->| R |                |  E  |                     |  C  |
+ | -----                |  Q  |                     |  T  |
+ |   |     Request      |  U  |  Configure module   |  I  |
+ |   ------------------>|  E  |-------------------> |  O  |
+ |                      |  S  |                     |  N  |
+ |                      |  T  |                     |     |
+ |                      |     |                     |  I  |
+  -----                 |  D  |                     |  S  |
+      |                 |  E  |                     |  A  |
+      |                 |  C  |                     |  L  |
+      |                 |  O  |                     |  L  |
+      |                 |  D  |                     |  O  |
+      |                 |  E  |                     |  W  |
+      |                 -------                     -------
+      |                                              |  |
+      |                                              |  |
+   ------                 Not Allowed                |  |
+   |  R |<--------------------------------------------  |
+   |  E |                                               |
+   |  S |                                               | Allowed
+   |  P |                                               |
+   |  O |                                               |
+   |  N |                                               |
+   |  S |<----            -------                       |
+   |  E |    |            |  P  |                       |
+   ------    |            |  R  |<-----------------------
+             |            |  E  |
+             |            |     |
+             |            |  A  |
+             |            |  C  |
+             |            |  T  |
+             |            |  I  |
+             |            |  O  |
+             |            |  N  |
+             |            -------
+             |               |
+             |               |
+             |    -------    |
+             |    |  E  |    |
+             |    |  X  |    |
+             |    |  E  |    |
+             |    |  C  |<----
+             |    |  U  |
+             |    |  T  |
+             |    |  E  |------
+             |    -------     |
+             |                |
+             |    -------     |
+             |    |  P  |     |
+             |    |  O  |     |
+             |    |  S  |<-----
+             |    |     |
+             -----|  A  |
+                  |  C  |
+                  |  T  |
+                  |  I  |
+                  |  O  |
+                  |  N  |
+                  -------
+
+Em resumo a arquitetura de uma aplicação que utiliza o IbeFramework é a seguinte:
+
+
+    MAPS<--------------------- ACTION <-----  REQUEST USER
+                                  ^
+                                  |
+    FORMS------------->SCRENS <----

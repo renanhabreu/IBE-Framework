@@ -1,0 +1,12 @@
+  _   _ U _____ u _      ____
+ |'| |'|\| ___"|/|"|   U|  _"\ u
+/| |_| |\|  _|"U | | u \| |_) |/
+U|  _  |u| |___ \| |/__ |  __/
+ |_| |_| |_____| |_____||_|
+ //   \\ <<   >> //  \\ ||>>_
+(_") ("_)__) (__)_")("_)__)__)
+
+Este repositório contem os arquivos css, scripts e imagens do aplicativo
+esta pasta torna o aplicativo mais organizado quanto aos repositórios e suas
+funcionalidades.
+Não existe uma regra específica deste repositório. A regra é apenas conceitual
