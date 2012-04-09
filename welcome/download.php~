@@ -1,0 +1,26 @@
+<?php
+
+        header('Cache-Control: no-cache, must-revalidate');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Content-type: application/json');
+
+if(isset($_GET["_email"])){
+    file_put_contents("emails_list.php",$_GET["_email"].chr(13),FILE_APPEND);
+    $count = trim(file_get_contents("count.txt"));
+    $count++;
+    file_put_contents("count.txt",$count);
+   
+
+        $array = array(
+            'success' => true,
+            'location'=>'ibe-framework-rc1.1.zip'
+        );
+
+}else{
+
+    $array = array(
+                'success' => false
+    );
+}
+
+echo json_encode($array);

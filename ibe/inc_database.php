@@ -23,13 +23,13 @@ abstract class Ibe_Database {
         /* if(!isset (self::$conn)){
           include_once Ibe_Register::get('SIGO_CAMINHO_RAIZ') . "includes/banco.php";
           } */
-        self::$conn = @mysql_connect($host,$user,$pass);
+        @self::$conn = mysql_connect($host,$user,$pass);
         if (!self::$conn) {
-            throw new Ibe_Exception(mysql_error(),null,false);
+            throw new Ibe_Exception_Database(mysql_error(),null,false);
         }
         $selected = mysql_select_db($schema);
         if (!$selected) {
-            throw new Ibe_Exception(mysql_error(),null,false);
+            throw new Ibe_Exception_Database(mysql_error(),null,false);
         }
     }
 
@@ -69,7 +69,7 @@ abstract class Ibe_Database {
         $result = mysql_query($query);
 
         if (!$result) {
-            throw new Ibe_Exception(Ibe_Exception::FALHA_DE_SQL, array(mysql_error(), $query));
+            throw new Ibe_Exception_Database(Ibe_Exception::FALHA_DE_SQL, array(mysql_error(), $query));
         }
 
         return $result;

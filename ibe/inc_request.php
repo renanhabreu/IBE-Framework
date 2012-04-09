@@ -8,9 +8,9 @@
  */
 class Ibe_Request {
 
-    static private $default_model = 'public';
-    static private $default_controller = 'public';
-    static private $default_action = 'public';
+    static private $_module = 'public';
+    static private $_controller = 'public';
+    static private $_action = 'public';
 
     /**
      * Parametros enviados pela requisicao
@@ -53,71 +53,41 @@ class Ibe_Request {
      * Seta o nome do modulo padrao quando este nao for citado na URL
      * @param type $name
      */
-    static public function setDefaultModule($name){ self::$default_model = $name;}
+    static public function setDefaultModule($name){ self::$_module = $name;}
 
     /**
      * Seta o nome do controlador padrao quando este nao for citado na URL
      * @param type $name
      */
-    static public function setDefaultController($name){ self::$default_controller = $name;}
+    static public function setDefaultController($name){ self::$_controller = $name;}
 
     /**
-     * Seta o nome da aÁ„o padrao quando este nao for citado na URL
+     * Seta o nome da a√ß√£o padrao quando este nao for citado na URL
      * @param type $name
      */
-    static public function setDefaultAction($name){ self::$default_action = $name;}
-
-    /**
-     * Captura o nome do mÛdulo padrao do aplicativo
-     * @param type $name
-     */
-    static public function getDefaultModule(){ return self::$default_model;}
-
-    /**
-     * Captura o nome do controlador padrao do aplicativo
-     * @param type $name
-     */
-    static public function getDefaultController(){ return self::$default_controller;}
-
-    /**
-     * Captura o nome da aÁ„o padrao do aplicativo
-     * @param type $name
-     */
-    static public function getDefaultAction(){ return self::$default_action;}
-
+    static public function setDefaultAction($name){ self::$_action = $name;}
+   
     /**
      * Inicia a execucao de uma nova requisicao HTTP ao aplicativo
      * @return Ibe_Request
      */
-    static public function dispatch($user_session = 'all_user') {
-
-        //decodifica a url para identificar a requisicao
-        Ibe_Request_Decode::url();
-
-        //Cria uma nova requisicao
-        $request = new Ibe_Request();
-        $request->setUser(Ibe_User::getInstance($user_session));
-
-        //executa a acao
-        Ibe_Request_Execute::action($request);
-    }
-
-    /**
-     * Seta o usuario que realizou a requisicao
-     * @param Ibe_User $user
-     * @return Ibe_Request
-     */
-    public function setUser(Ibe_User $user) {
-        $this->user = $user;
-        return $this;
-    }
-
-    /**
-     * Retorna o usuario atual do sistema
-     * @return Ibe_User
-     */
-    public function getUser() {
-        return $this->user;
+    static public function dispatch() {
+        
+        $ctx = Ibe_Context::getInstance(self::$_module,self::$_controller,self::$_action);
+        $request = new self();
+        
+        $action = Ibe_Load::action();        
+        $action->setContext($ctx);
+        $action->preAction($request);
+        $template = $action->execute($request);
+        $action->posAction($request);
+        
+        $view_app = $action->getViewApplication();
+        $view_mod = $action->getViewModule();
+        $view_ctr = $action->getViewController();
+        
+        $view = new Ibe_View($view_app,$view_mod,$view_ctr,$action);
+        $view->show($template);
     }
 
     /**
@@ -132,7 +102,7 @@ class Ibe_Request {
 
     /**
      * Retorna o valor de um parametro passado como post,get ou cookie,
-     * caso o parametro n„o exista sera devolvido um valor_padrao
+     * caso o parametro n√£o exista sera devolvido um valor_padrao
      * @param string $nome
      * @param mixed $valor_padrao
      * @return mixed
@@ -165,7 +135,7 @@ class Ibe_Request {
     }
 
     /**
-     * Compara se o valor de um parametro passado como post,get,cookie È igual ao
+     * Compara se o valor de um parametro passado como post,get,cookie √© igual ao
      * passado como parametro $valor
      *
      * @param string $nome

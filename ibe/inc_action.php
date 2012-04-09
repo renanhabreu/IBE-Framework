@@ -7,119 +7,82 @@
  * @package ibe
  */
 abstract class Ibe_Action extends Ibe_Object {
-
-    private $view_application = NULL;
-
+    protected $module;
+    protected $controller;
+    protected $action;
+    protected $filters = array();
+    protected $modules_params = array();
+    
+    protected $view_application = NULL;
+    protected $view_module = NULL;
+    protected $view_controller = NULL;
+    
+    private $configure = NULL;
+    
     public function __construct() {
-
-        $this->view_application = Ibe_Layout_Screen::getInstance();
-        $this->view_application->addPathName(Ibe_Source::getPathModuleName())
-                                ->setScreenName(Ibe_Source::getPathViewName());
-
-        $this->view_application->view_module = Ibe_Layout_Screen::getInstance();
-        $this->view_application->view_module->addPathName(Ibe_Source::getPathModuleName())
-                            ->addPathName(Ibe_Request_Decode::getModule())
-                            ->setScreenName(Ibe_Source::getPathViewName());
-
-
-        $this->view_application->view_module->view_controller = Ibe_Layout_Screen::getInstance();
-        $this->view_application->view_module->view_controller->addPathName(Ibe_Source::getPathModuleName())
-                                ->addPathName(Ibe_Request_Decode::getModule())
-                                ->addPathName(Ibe_Request_Decode::getController())
-                                ->setScreenName(Ibe_Source::getPathViewName());
-
-
-        $this->view_application->view_module->view_controller->view_action = Ibe_Layout_Screen::getInstance();
-        $this->view_application->view_module->view_controller->view_action
-                               ->addPathName(Ibe_Source::getPathModuleName())
-                               ->addPathName(Ibe_Request_Decode::getModule())
-                               ->addPathName(Ibe_Request_Decode::getController())
-                               ->addPathName(Ibe_Source::getPathViewName())
-                               ->setScreenName(Ibe_Request_Decode::getAction());
-
+        $this->view_application = new Ibe_Object(); 
+        $this->view_module      = new Ibe_Object();
+        $this->view_controller  = new Ibe_Object();
+        
+        $this->configure = Ibe_Load::configure();
+        
+        if(!is_null($this->configure)){
+            $this->modules_params = $this->configure->getModulesParams();
+            $this->filters = array_merge($this->configure->getFilters(),$this->filters);
+            
+            
+            if($this->configure->isDataBaseActive()){
+                $host   = $this->configure->getDataBaseHost();
+                $user   = $this->configure->getDataBaseUser();
+                $pass   = $this->configure->getDataBasePass();
+                $schema = $this->configure->getDataBaseSchm();
+                
+                Ibe_Database::open($host,$user,$pass,$schema);
+            }        
+        }
+        
+        $helpers = $this->configure->getHelpers();
+        foreach($helpers as $helper){
+            $hp = Ibe_Helper::get($helper);
+            
+            $this->view_application->helper = new Ibe_Object();
+            $this->view_application->helper->__set($helper,$hp);
+            
+            $this->view_module->helper = new Ibe_Object();
+            $this->view_module->helper->__set($helper,$hp);
+            
+            $this->view_controller->helper = new Ibe_Object();
+            $this->view_controller->helper->__set($helper,$hp);
+            
+            $this->helper = new Ibe_Object();
+            $this->helper->__set($helper,$hp);
+        }
+        
+        foreach($this->filters as $filter){
+            Ibe_Load::filter($filter)->execute();
+        }
+        
     }
-
-    /**
-     * Retorna o layout da aplicação
-     * @return Ibe_Layout_Screen
-     */
-    public function getViewApplication() {
+    
+    
+    public function setContext(Ibe_Context $context){
+        $this->module = $context->getModule();
+        $this->controller = $context->getController();
+        $this->action = $context->getAction();
+    }
+    
+    public function getViewApplication(){
         return $this->view_application;
     }
-
-    /**
-     * Seta um novo Layout para o aplicativo
-     * @param Ibe_Layout_Screen $view_application
-     */
-    public function setViewApplication(Ibe_Layout_Screen $view_application) {
-        $this->view_application = $view_application;
+    
+    public function getViewModule(){
+        return $this->view_module;
     }
-
-    /**
-     * Retorna o layout do modulo
-     * @return Ibe_Layout_Screen
-     */
-    public function getViewModule() {
-        return $this->view_application->view_module;
+    
+    public function getViewController(){
+        return $this->view_controller;
     }
-
-    /**
-     * Seta um novo Layout para o modulo
-     * @param Ibe_Layout_Screen $view_application
-     */
-    public function setViewModule(Ibe_Layout_Screen $view_module) {
-        $this->view_application->view_module = $view_module;
-    }
-
-    /**
-     * Retorna o layout do controlador
-     * @return Ibe_Layout_Screen
-     */
-    public function getViewController() {
-        return $this->view_application->view_module->view_controller;
-    }
-
-    /**
-     * Seta um novo Layout para o controlador
-     * @param Ibe_Layout_Screen $view_application
-     */
-    public function setViewController(Ibe_Layout_Screen $view_controller) {
-        $this->view_application->view_module->view_controller = $view_controller;
-    }
-
-    /**
-     * Retorna o layout da acao
-     * @return Ibe_Layout_Screen
-     */
-    public function getViewAction() {
-        return $this->view_application->view_module->view_controller->view_action;
-    }
-
-    /**
-     * Seta um novo Layout para a acao
-     * @param Ibe_Layout_Screen $view_application
-     */
-    public function setViewAction(Ibe_Layout_Screen $view_action) {
-        $this->view_application->view_module->view_controller->view_action = $view_action;
-    }
-
-    /**
-     * Verifica se o usuario tem permissao de acesso ao construtor
-     * @param Ibe_User $user
-     */
-    public function isAllowed(Ibe_Request $req) {
-        $userAccess = $req->getUser()->getAccess();
-        $allowed = FALSE;
-
-        if(($allowed = $userAccess[Ibe_Request_Decode::getModule()]) !== TRUE){
-            if(($allowed = $allowed[Ibe_Request_Decode::getController()]) !== TRUE){
-                $allowed = $allowed[Ibe_Request_Decode::getAction()];
-            }
-        }
-
-        return $allowed;
-    }
-
+    
     /**
      * Acao disparada antes de realizar a chamada a acao
      * @param Ibe_Request $req
@@ -133,7 +96,11 @@ abstract class Ibe_Action extends Ibe_Object {
      * @param Ibe_Request $req
      */
     public function posAction(Ibe_Request $req) {
-
+        if(!is_null($this->configure)){
+            if($this->configure->isDataBaseActive()){
+                Ibe_Database::close();
+            }
+        }
     }
 
     /**

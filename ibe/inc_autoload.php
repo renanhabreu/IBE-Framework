@@ -1,4 +1,6 @@
 <?php
+// DIRECTORY_SEPARATOR alias
+define("DS",DIRECTORY_SEPARATOR);
 
 /**
  * Classe de includes automatico da classes do aplicativo.
@@ -23,7 +25,7 @@ abstract class Ibe_Autoload {
             //configurando o nome
             $class_name = strtolower($class_name);
             $class_dir = explode('_', $class_name);
-            //verifica se a classe pertence as funcoinalidades do framework
+            //verifica se a classe pertence as funcinalidades do framework
             $ibe_dir = ($class_dir[0] == 'ibe');
             $ext_dir = ($class_dir[0] == 'ext');
 
@@ -41,7 +43,7 @@ abstract class Ibe_Autoload {
                 
             } else if ($ext_dir) {
                 $_extension = '_extensions/' . implode('/', $class_dir) . '.php';
-
+                //Ibe_Debug::dispatchAlert(__FILE__,$_extension);
                 if (file_exists($_extension)) {
                     $directory = $_extension;
                 } else {

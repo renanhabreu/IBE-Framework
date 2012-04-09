@@ -1,0 +1,9 @@
+<?php
+
+class Act extends Skt_Core_Maker{
+
+    public function create(Skt_Core_Request $req){
+        $this->_file->include_tpl("inc_view",$this->_dir_ctr."_views",array("act"=>$this->_act),"inc_".$this->_act);
+        $this->_file->include_tpl("inc_action",$this->_dir_ctr."_actions",array("act"=>$this->_act),"inc_".$this->_act);
+    }
+}

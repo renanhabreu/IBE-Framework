@@ -53,15 +53,15 @@ abstract class Ibe_Map {
     public function __construct() {
         $this->configure();
         if (!isset($this->table_name)) {
-            throw new Ibe_Exception(Ibe_Exception::MAPA_TABELA_SEM_NOME);
+            throw new Ibe_Exception_Map(Ibe_Exception::MAPA_TABELA_SEM_NOME);
         }
 
         if (!isset($this->primary_key) && !$this->has_many_table) {
-            throw new Ibe_Exception(Ibe_Exception::MAPA_SEM_PK);
+            throw new Ibe_Exception_Map(Ibe_Exception::MAPA_SEM_PK);
         }
 
         if (!sizeof($this->columns_conf)) {
-            throw new Ibe_Exception(Ibe_Exception::MAPA_SEM_COLUNA);
+            throw new Ibe_Exception_Map(Ibe_Exception::MAPA_SEM_COLUNA);
         } else {
             $this->columns = array_keys($this->columns_conf);
         }
@@ -78,29 +78,7 @@ abstract class Ibe_Map {
      * @return Ibe_Map
      */
     static public function getTable($model_class_name) {
-
-        $filename = 'inc_' . strtolower($model_class_name) . '.php';
-        $model_class_name = ucfirst(strtolower($model_class_name)) . 'Map';
-
-
-        try {
-            Ibe_Source::load(Ibe_Source::getPathMapName(), '/'.$filename);
-        } catch (Exception $e) {
-            if ($e->getCode() == Ibe_Exception::FALHA_EM_LOAD) {
-                $path = Ibe_Request_Decode::getModulePath() . Ibe_Source::getPathMapName();
-                Ibe_Source::load($path, $filename);
-            }else{
-                throw new Ibe_Exception($e->getMessage(),array(),$e->getCode());
-            }
-        }
-
-        if (class_exists($model_class_name)) {
-            $reflection = new ReflectionClass($model_class_name);
-            return $reflection->newInstance();
-        } else {
-            $param =  array($model_class_name,NULL);
-            throw new Ibe_Exception(Ibe_Exception::MAPA_NAO_ENCONTRADO,$param);
-        }
+        return Ibe_Load::map($model_class_name);
     }
 
     /**
@@ -212,7 +190,7 @@ abstract class Ibe_Map {
 
         $this->preDelete();
         if (!isset($this->columns_val[$this->primary_key])) {
-            throw new Ibe_Exception(Ibe_Exception::MAPA_VALOR_PK, array($this->table_name));
+            throw new Ibe_Exception_Map(Ibe_Exception::MAPA_VALOR_PK, array($this->table_name));
         }
         $query = Ibe_Database_Query::newDelete($this->table_name)
                 ->addWhere(
@@ -406,10 +384,10 @@ abstract class Ibe_Map {
                     $child_obj = $child_obj->findAllBy($child_obj->getPrimaryKey(), $this->columns_val[$key]);
                 }
             } else {
-                throw new Ibe_Exception(Ibe_Exception::MAPA_SEM_RELACIONAMENTO, array($this->table_name, $class_name));
+                throw new Ibe_Exception_Map(Ibe_Exception::MAPA_SEM_RELACIONAMENTO, array($this->table_name, $class_name));
             }
         } else {
-            throw new Ibe_Exception(Ibe_Exception::MAPA_SEM_RELACIONAMENTO, array($this->table_name, $class_name));
+            throw new Ibe_Exception_Map(Ibe_Exception::MAPA_SEM_RELACIONAMENTO, array($this->table_name, $class_name));
         }
         return $child_obj;
     }
@@ -428,7 +406,7 @@ abstract class Ibe_Map {
         $result = mysql_query($query);
 
         if (!$result) {
-            throw new Ibe_Exception(mysql_errno());
+            throw new Ibe_Exception_Map(mysql_errno());
         } else {
             $return = mysql_fetch_array($result);
             $count = (int) $return['total'];

@@ -117,7 +117,6 @@ abstract class Ibe_Database_Query{
 
             $result = mysql_query($query);
             if (!$result) {
-                Ibe_Log::save('database_erro', $query);
                 $query = (Ibe_Register::get('SHOW_SQL_IN_EXCEPTION',false))? $query:'';
                 throw new Ibe_Exception(Ibe_Exception::FALHA_DE_SQL,array(mysql_error(),$query));
             }
@@ -131,9 +130,7 @@ abstract class Ibe_Database_Query{
                 $array_results = $result;
             }
 
-            Ibe_Log::save('database_query', $query);
         }else{
-            Ibe_Log::save('database_error', $query);
             throw new Ibe_Exception(Ibe_Exception::ERRO_MYSQL);
         }
 

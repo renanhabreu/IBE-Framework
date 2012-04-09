@@ -49,12 +49,12 @@ class Ibe_Exception extends Exception {
     const LAYOUT_VARIAVEL_INEXISTENTE = 7;
 
     /**
-     * 'O nome da tabela n„o foi definido  no mapa <em> %s </em> '
+     * 'O nome da tabela n√£o foi definido  no mapa <em> %s </em> '
      */
     const MAPA_TABELA_SEM_NOME = 8;
 
     /**
-     * 'O nome da chave primaria n„o foi definido  no mapa <em> %s </em>'
+     * 'O nome da chave primaria n√£o foi definido  no mapa <em> %s </em>'
      */
     const MAPA_SEM_PK = 9;
 
@@ -216,7 +216,6 @@ class Ibe_Exception extends Exception {
         $code = (is_int($mes_index)) ? $mes_index:$code ;
 
         parent::__construct($message, $code);
-        Ibe_Log::save('request_error', $message);
     }
 
        /**
@@ -262,8 +261,8 @@ class Ibe_Exception extends Exception {
         $msgs[self::FORM_SEM_CLASSE] = 'O Form [<em> %s </em>] nao existe na localizacao [<em> %s </em>]';
         $msgs[self::FORM_SEM_CONFIGURACAO] = 'Variavel $form_fields nao foi setada com as configuracoes da classe descritora de formulario [<em>%s</em>]';
         $msgs[self::LAYOUT_VARIAVEL_INEXISTENTE] = 'Variavel [<em> %s </em>] do layout herdeiro de <em>Ibe_Layout</em> nao foi definida';
-        $msgs[self::MAPA_TABELA_SEM_NOME] = 'O nome da tabela n„o foi definido  no mapa <em> %s </em> ';
-        $msgs[self::MAPA_SEM_PK] = 'O nome da chave primaria n„o foi definido  no mapa <em> %s </em>';
+        $msgs[self::MAPA_TABELA_SEM_NOME] = 'O nome da tabela n√£o foi definido  no mapa <em> %s </em> ';
+        $msgs[self::MAPA_SEM_PK] = 'O nome da chave primaria n√£o foi definido  no mapa <em> %s </em>';
         $msgs[self::MAPA_SEM_COLUNA] = 'As colunas nao foram definidas no mapa <em> %s </em>';
         $msgs[self::MAPA_NAO_ENCONTRADO] = 'O Map [<em> %s </em>] nao existe na pasta de mapas <em>%s</em>';
         $msgs[self::MAPA_VALOR_PK] = 'O valor da chave primaria nao foi definida  no mapa <em> %s </em>';
@@ -282,7 +281,7 @@ class Ibe_Exception extends Exception {
         $msgs[self::REQUISICAO_ACAO_INEXISTENTE] = 'Objeto acao nao foi criado em Ibe_Request_Decode';
         $msgs[self::REQUISICAO_INVALIDA] = 'A requisicao nao pode ser realizada verifique se a acao realmente esta disponivel [<em>%s</em>][<em>%s</em>][<em>%s</em>]';
         $msgs[self::CLASSE_PAI_INVALIDA] = 'A classe [<em>%s</em>] nao extende a classe [<em>%s</em>]';
-        $msgs[self::ERRO_MYSQL] = 'Nao foi aberto uma conexao com o banco de dados MYSQL. Utilize a classe [<em>Ibe_Database::open(<b>$host</b>,<b>$user</b>,<b>$pass</b>,<b>$schema</b>)</em>]';
+        $msgs[self::ERRO_MYSQL] = 'Nao foi aberto uma conexao com o banco de dados MYSQL. Utilize o arquivo de configuracao</em>]';
         $msgs[self::LAYOUT_INDEFINIDO] = 'A acao deve retornar um dos resultados [<b><em>Ibe_Layout::ACTION</em>, <em>Ibe_Layout::CONTROLLER</em>, <em>Ibe_Layout::APPLICATION</em>, <em>Ibe_Layout::NONE</em></b>]';
         $msgs[self::CLASSE_SEM_METODO] = 'O metodo [ <b><em>$s</em> ] nao esta disponivel para este objeto';
         $msgs[self::DIRETORIO_NAO_EXISTE] = 'O diretorio [ <b><em>$s</em></b> ] nao existe';

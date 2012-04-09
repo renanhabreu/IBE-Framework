@@ -78,7 +78,6 @@ abstract class Ibe_Debug {
         }
         $time = number_format($tempo - self::$times[$name]['init'], 5, ',', ' ');
         Ibe_Debug::dispatchAlert('TEMPO DE EXECUCAO', $time);
-        Ibe_Log::save('time_execution_application', $time);
     }
 
     /**
@@ -126,16 +125,6 @@ abstract class Ibe_Debug {
         echo "</div>";
         echo "</pre>";
         exit();
-    }
-
-    /**
-     * Salva um arquivo txt.log como conteudo de $log_content
-     * @param string $log_dir
-     * @param string $log_name
-     * @param string $log_content
-     */
-    static public function saveLog($log_dir, $log_name, $log_content) {
-        file_put_contents($log_dir . '_sigo_app.txt.log', $log_content . '::' . date('d-m-Y H:i:s') . chr(13), FILE_APPEND);
     }
 
 }

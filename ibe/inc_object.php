@@ -25,6 +25,7 @@ class Ibe_Object{
 
     public function __set($name, $value) {
         $this->vars[$name] = $value;
+        return $this;
     }
 
     public function __getVars(){
@@ -38,7 +39,18 @@ class Ibe_Object{
         }
         return NULL;
     }
-
+    
+    public function __include($filename){
+        if(!file_exists($filename)){
+            throw new Ibe_Exception("Arquivo de objeto nao encontrado. [".$filename." ]");
+        }
+        
+        ob_start();
+        include_once($filename);
+        $contents = ob_get_contents();
+        ob_end_clean();
+        return $contents;
+    }
     /**
      * Verifica se alguma variável foi setada através de do metodo mágico: Ex:
      * <code>

@@ -1,1 +1,1 @@
-<?php header('location: ibe/');?>
+<?php header('location: welcome/');?>
