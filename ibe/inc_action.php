@@ -83,6 +83,14 @@ abstract class Ibe_Action extends Ibe_Object {
         return $this->view_controller;
     }
     
+    public function redirect($mod,$ctr,$action){
+		
+	}
+	
+	public function forward($app,$mod,$ctr,$act, Ibe_Request $req){
+		
+	}
+    
     /**
      * Acao disparada antes de realizar a chamada a acao
      * @param Ibe_Request $req
@@ -114,4 +122,6 @@ abstract class Ibe_Action extends Ibe_Object {
      * @return int
      */
     abstract public function execute(Ibe_request $req);
+    
+    
 }

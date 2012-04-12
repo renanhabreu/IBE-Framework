@@ -23,17 +23,21 @@ class Ibe_Context{
         
         $url = explode('/', rtrim($_SERVER['REQUEST_URI']," \t\n\r\0/"));
         $exit = false;
-        
-        $this->url_base = $url;
-        
         $index = array_search('index.php', $url);
+        
+        if(($_ = strstr($_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],'index.php',true))){
+			$this->url_base = 'http://'.$_; 
+		}else{
+			$this->url_base = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+		}
+		
         if ($index) {
-            $slices = array_slice($url, 0, $index);
+            $slices = array_slice($url, 0, $index);        
         } else {
             array_pop($url);
             $slices = $url;
         }
-
+		
         if ($index) {
             $url = array_slice($url, ++$index, sizeof($url));
             $size = sizeof($url);

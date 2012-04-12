@@ -36,6 +36,7 @@ abstract class Ibe_Autoload {
             if ($ibe_dir) {
                 $dir_file_class = implode('/', $class_dir);
                 $framework_dir = FW_ROOT . $dir_file_class . '.php';
+				
 
                 if(!$directory && file_exists($framework_dir)){
                     $directory = $framework_dir;
@@ -50,7 +51,6 @@ abstract class Ibe_Autoload {
                     throw new Exception('A extensão ' . $n . ' não foi encontrada. Deve ser implementada em  [' . $_extension . ']');
                 }
             }
-
             if ($directory) {
                 require $directory;
                 return;
@@ -78,7 +78,7 @@ abstract class Ibe_Autoload {
     static public function frameworkDirectoryRegister($dir) {
         if (!defined('FW_ROOT')) {
             if (is_dir($dir)) {
-                define('FW_ROOT', $dir);
+                define('FW_ROOT', $dir.DS);
             } else {
                 throw new Exception('Diretorio ' . $directory . 'do framework nao encontrado');
             }

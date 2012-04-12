@@ -20,12 +20,14 @@ abstract class Ibe_Helper extends Ibe_Object{
     public function __call($name,$arguments){
         
         if($name == "_"){
-            
             if(sizeof($this->params) > 0){
-                $len = sizeof($arguments);
-                for($i = 0; $i < $len; $i++ ){
-                    $this->__set($this->params[$i],$arguments[$i]);
-                }
+                $i = 0;
+				foreach($this->params as $key=>$val){					
+					if(isset($arguments[$i])){
+						$this->params[$key] = $arguments[$i];
+					}					
+					$i++;
+				}
             }
             
             return $this->execute();
