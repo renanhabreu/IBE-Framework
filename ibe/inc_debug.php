@@ -85,6 +85,7 @@ abstract class Ibe_Debug {
      * @param string $title
      * @param mixed $content
      * @param bool $var_dump
+	 * @deprecated
      */
     static public function dispatchAlert($title, $content, $var_dump = false) {
 
@@ -108,6 +109,7 @@ abstract class Ibe_Debug {
      * @param string $title
      * @param mixed $content
      * @param bool $var_dump
+	 * @deprecated
      */
     static public function dispatchError($title, $content, $var_dump = false) {
 
@@ -126,6 +128,14 @@ abstract class Ibe_Debug {
         echo "</pre>";
         exit();
     }
+    
+    static public function error($title,$content){
+		self::dispatchError($title,$content);
+	}
+	
+    static public function warn($title,$content){
+		self::dispatchAlert($title,$content);
+	}
 
 }
 

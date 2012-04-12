@@ -42,19 +42,18 @@ abstract class Ibe_Action extends Ibe_Object {
         }
         
         $helpers = $this->configure->getHelpers();
+        
+        $this->view_application->helper = new Ibe_Object();
+        $this->view_module->helper = new Ibe_Object();
+        $this->view_controller->helper = new Ibe_Object();
+        $this->helper = new Ibe_Object();
+        
         foreach($helpers as $helper){
             $hp = Ibe_Helper::get($helper);
             
-            $this->view_application->helper = new Ibe_Object();
-            $this->view_application->helper->__set($helper,$hp);
-            
-            $this->view_module->helper = new Ibe_Object();
-            $this->view_module->helper->__set($helper,$hp);
-            
-            $this->view_controller->helper = new Ibe_Object();
-            $this->view_controller->helper->__set($helper,$hp);
-            
-            $this->helper = new Ibe_Object();
+            $this->view_application->helper->__set($helper,$hp);            
+            $this->view_module->helper->__set($helper,$hp);            
+            $this->view_controller->helper->__set($helper,$hp);            
             $this->helper->__set($helper,$hp);
         }
         
@@ -83,12 +82,16 @@ abstract class Ibe_Action extends Ibe_Object {
         return $this->view_controller;
     }
     
-    public function redirect($mod,$ctr,$action){
+    public function redirect($mod,$ctr,$action,$get = array()){
+		$url = Ibe_Context::getInstance()->getUrlBase();
+		$param = '/';
 		
-	}
-	
-	public function forward($app,$mod,$ctr,$act, Ibe_Request $req){
+		foreach($get as $name=>$value){
+				$param .= $name.'/'.$value.'/';
+		}
 		
+		header('location:'.$url.'index.php/'.$mod.'/'.$ctr.'/'.$action.$param);
+		exit();
 	}
     
     /**
