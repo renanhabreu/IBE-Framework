@@ -432,8 +432,11 @@ abstract class Ibe_Map {
     private function getWhere($fields, $values) {
         // Montando a opcao de campos para arrays ou string unica
         if (!is_array($fields) && !is_array($values) && isset($fields) && isset($values)) {
+			$fd = $fields; //bug fixed
             $fields = array($fields => '=');
-            $values = array($fields=>array($values,'AND'));
+            // Ibe_Debug::warn(__FILE__,$fields);
+            $values = array($fd=>array($values,'AND'));
+           // Ibe_Debug::warn(__FILE__,$values);
         } else if(!is_array($fields) || !is_array($values)){
             $fields = array();
         }

@@ -4,6 +4,8 @@
    echo "------------------------------------------"
    echo "-      Fabricante ibe-framework 1.1      -"
    echo "------------------------------------------"
+   echo -n "Qual o repositorio de aplicacoes? "
+   read _rep
    echo -n "Qual o nome da aplicacao? "
    read _app
    criar_aplicacao
@@ -17,7 +19,7 @@ executar_outra(){
    read opcao
    
    php "index.php" $fab app:$_app $opcao
-   chmod -R 777 "../apps"
+   chmod -R 777 $_rep
    mostrar_menu
 } 
 
@@ -65,7 +67,7 @@ criar_acao(){
    read act
    
    php "index.php" act app:$_app mod:$mod ctr:$ctr act:$act
-   chmod -R 777 "../apps"
+   chmod -R 777 $_rep
    mostrar_menu
 }
 
@@ -79,7 +81,7 @@ criar_controlador(){
    read ctr
    
    php "index.php" ctr app:$_app mod:$mod ctr:$ctr 
-   chmod -R 777 "../apps"
+   chmod -R 777 $_rep
    mostrar_menu
 }
 
@@ -90,14 +92,14 @@ criar_modulo(){
    
    
    php "index.php" mod app:$_app mod:$mod 
-   chmod -R 777 "../apps"
+   chmod -R 777 $_rep
    mostrar_menu
 }
 
 criar_aplicacao(){
    
    php "index.php" app app:$_app
-   chmod -R 777 "../apps"
+   chmod -R 777 $_rep
    mostrar_menu
 }
 
@@ -116,7 +118,7 @@ criar_mapa(){
    read schm
    
    php "index.php" map app:$_app host:$host user:$user pass:$pass schm:$schm
-   chmod -R 777 "../apps"
+   chmod -R 777 $_rep
    mostrar_menu
 }
 
