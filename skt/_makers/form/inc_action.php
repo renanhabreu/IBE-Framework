@@ -53,11 +53,17 @@ class Form extends Skt_Core_Maker{
             $field = array();
             //if(is_array($tbl)){
                 foreach ($tbl_conf['field'] as $name => $type) {
+                    
+                    $t = ($name ==  'id')? 'hidden':'text';
+                    
                     $field[] = "\t\t\t'".$name."'=>Ext_Form_Field::getInstance()\n"
                             . "\t\t\t\t\t->setType('" . $this->getType($type) . "')\n"
-                            . "\t\t\t\t\t->setInput('text')\n"
+                            . "\t\t\t\t\t->setInput('{$t}')\n"
                             . "\t\t\t\t\t->setName('" . $name . "')\n"
-                            . "\t\t\t\t\t->setLabel('" . ucfirst(strtolower($name)) . "')";
+                            . "\t\t\t\t\t->setLabel('" . ucfirst(strtolower($name)) . "')\n"
+                            . "\t\t\t\t\t->setValidation(array(
+						Ext_Form_Field::IS_EMPTY
+					))";
                 }
             //}
             $file_php .= implode(",\n", $field);

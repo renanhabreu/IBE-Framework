@@ -79,7 +79,7 @@
                             <p> 
                                 <span class="tab"></span>
                                 O pacote mapa é o único pacote que o framework da o suporte nativamente.
-                                Ele é a parte ORM das aplicações, porém, o desenvolvedor não precisa se 
+                                Ele é a parte ORM das aplica&ccedil;&otilde;es, porém, o desenvolvedor não precisa se 
                                 limitar a tal pacote. As classes aqui encontradas podem são criadas
                                 automaticamente pelo Fabricante de códigos <em>map</em>
                             </p>
@@ -89,7 +89,7 @@
                             <p> 
                                 <span class="tab"></span>
                                 No pacote _modules estão localizados todos os módulos, controladores e views.
-                                O IBE trabalha mantendo a separação de Aplicativos, Módulos, Controladores e Ações.
+                                O IBE trabalha mantendo a separação de Aplicativos, Módulos, Controladores e a&ccedil;&otilde;es.
                                 Dessa forma é possível trabalhar com o sistema de layout em um sentido mais amplo,
                                 sob a hierarquia de Aplicativos.
                                 Isso significa que diversos aplicativos podem possuir o mesmo layout padrão, não
@@ -124,7 +124,7 @@
                     
                     <ul>
                         <li><b>I</b>nspiração do desenvolvedor(Extensibilidade)</li>
-                        <li><b>B</b>eleza das aplicações(Simplicidade)</li>
+                        <li><b>B</b>eleza das aplica&ccedil;&otilde;es(Simplicidade)</li>
                         <li><b>E</b>legância do desenvolvimento (MVC)</li>
                     </ul>
                     
@@ -132,7 +132,7 @@
                         <span class="tab"></span>O bom analista desenvolvedor sempre coloca em prática suas habilidades mais importantes, modelagem de dados e engenharia de requisitos.Todavia, esta tarefa é complexa, pois, além de modelar dados e levantar requisitos, concentra esforços em realizar projetos arquiteturais.
                         <br/><br/>
 
-<span class="tab"></span>Graças aos frameworks, nosso trabalho de projetar arquiteturas torna-se reduzido e menos desgastante porque estes são “miniarquiteturas reusáveis que fornecem as estruturas e os comportamentos génericos para uma família de abstrações de software dentro de um contexto”[Pressman, Roger S., Engenharia de Software,McGraw-Hill,2006].
+<span class="tab"></span>Graças aos frameworks, nosso trabalho de projetar arquiteturas torna-se reduzido e menos desgastante porque estes são “miniarquiteturas reusáveis que fornecem as estruturas e os comportamentos génericos para uma família de abstra&ccedil;&otilde;es de software dentro de um contexto”[Pressman, Roger S., Engenharia de Software,McGraw-Hill,2006].
 <br/><br/>
 
 <span class="tab"></span>Neste contexto o IBE utiliza padrões arquiteturais a fim de prover uma estrutura genérica para pequenos e médios aplicativos, os quais, focam na entrega rápida de produtos. O framework não tem objetivo substituir grandes ferramentas já consolidadas pelo mercado, ao contrário disso, objetiva ser um arcabouço para desenvolvedores individuais ou penas equipes que precisam de foco em: layouts, requisitos pequenos e bem definidos, entrega rápida de aplicativo, dentre outros. 

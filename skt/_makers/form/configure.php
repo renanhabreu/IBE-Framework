@@ -5,7 +5,7 @@ class Configure extends stdClass{
     public $database = array(
         "host"=>"localhost",
         "user"=>"root",
-        "pass"=>"",
+        "pass"=>"123",
         "schm"=>"test"
     );
     

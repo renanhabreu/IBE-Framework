@@ -165,7 +165,7 @@ class Ibe_Request {
 
         $value = preg_replace("/(from|select|insert|delete|where|drop table|show tables|#|\*|--|\\\\)/", "", $value);
         $value = trim($value);
-        $value = strip_tags($value);
+        $value = htmlentities($value);
         $value = addslashes($value);
 
         return urldecode($value);

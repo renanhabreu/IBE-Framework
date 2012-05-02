@@ -117,7 +117,6 @@ abstract class Ibe_Database_Query{
 
             $result = mysql_query($query);
             if (!$result) {
-                $query = (Ibe_Register::get('SHOW_SQL_IN_EXCEPTION',false))? $query:'';
                 throw new Ibe_Exception(Ibe_Exception::FALHA_DE_SQL,array(mysql_error(),$query));
             }
 

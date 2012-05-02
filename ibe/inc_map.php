@@ -143,9 +143,9 @@ abstract class Ibe_Map {
      */
     public function save() {
         $this->preSave();
-        $colunas = '';
+        //$colunas = '';
 
-        $cols = array();
+        //$cols = array();
 
 
         /**
@@ -174,7 +174,7 @@ abstract class Ibe_Map {
 
 
         //Ibe_Debug::dispatchError(__FILE__, $query->getQuery());
-        $executou = $query->execute(false);
+        $query->execute(false);
         if ($insert && $this->primary_key_auto_increment) {
             $this->columns_val[$this->primary_key] = mysql_insert_id();
         }
@@ -237,13 +237,14 @@ abstract class Ibe_Map {
     public function findAllBy($fields, $values, array $orders = array(), $page = 0, $size = 10000) {
 
         if (!is_array($orders)) {
-            $orders = array($orders);
+            $orders = array($orders=>true);
         }
 
         //Clausura order by
         $order = Ibe_Database_Query::newOrderby();
-        foreach ($orders as $field) {
+        foreach ($orders as $field=>$asc) {
             $order->addField($field);
+            $order->setAsc($asc);
         }
 
         //Monta o SELECT
@@ -253,8 +254,7 @@ abstract class Ibe_Map {
                 ->addOrderBy($order)
                 ->setPage($page)
                 ->setLimit($size);
-
-        //Ibe_Debug::show($query->getQuery(),__FILE__);
+       
         return $this->mountObjectsToFinds($query);
     }
 
@@ -268,7 +268,7 @@ abstract class Ibe_Map {
     }
 
     /**
-     * Encontra o objeto por um campo baseado na configuração da classe model
+     * Encontra o objeto por um campo baseado na configuraï¿½ï¿½o da classe model
      * @param string|array $field
      * @param mixed|array $value
      * @return Ibe_Map
@@ -375,6 +375,7 @@ abstract class Ibe_Map {
     public function getChild($class_name) {
         $child_obj = NULL;
         if (is_array($this->foreign_key)) {
+            $class_name = implode("",array_map("ucfirst",explode("_",$class_name)));
             $key = array_search($class_name, $this->foreign_key);
             if ($key) {
                 $child_obj = Ibe_Map::getTable($class_name);
@@ -416,7 +417,7 @@ abstract class Ibe_Map {
     }
 
     /**
-     * Verifica se o objeto é existe no banco de dados
+     * Verifica se o objeto ï¿½ existe no banco de dados
      * @return boolean
      */
     public function isEmpty() {
@@ -607,7 +608,7 @@ abstract class Ibe_Map {
     }
 
     /**
-     * Verifica se uma variavel do mapa foi setada ou não esta em branco
+     * Verifica se uma variavel do mapa foi setada ou nï¿½o esta em branco
      * @param string $name
      * @return boolean
      */

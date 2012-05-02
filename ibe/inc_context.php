@@ -8,6 +8,13 @@ class Ibe_Context{
     private $controller = NULL;
     private $action = NULL;
     
+    /**
+     *
+     * @param type $module
+     * @param type $controller
+     * @param type $action
+     * @return Ibe_Context
+     */
     static public function getInstance($module = NULL,$controller = NULL,$action = NULL){
         if(is_null(self::$instance)){
             self::$instance = new self($module,$controller,$action);

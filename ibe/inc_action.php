@@ -48,6 +48,11 @@ abstract class Ibe_Action extends Ibe_Object {
         $this->view_controller->helper = new Ibe_Object();
         $this->helper = new Ibe_Object();
         
+        
+        $this->view_application->modules_params = $this->modules_params;            
+        $this->view_module->modules_params = $this->modules_params;  
+        $this->view_controller->modules_params = $this->modules_params;  
+        
         foreach($helpers as $helper){
             $hp = Ibe_Helper::get($helper);
             
@@ -115,10 +120,10 @@ abstract class Ibe_Action extends Ibe_Object {
     }
 
     /**
-     * Método que implementa a acao lógica do aplicativo
-     * Este metodo será executado quando o usuário
+     * Mï¿½todo que implementa a acao lï¿½gica do aplicativo
+     * Este metodo serï¿½ executado quando o usuï¿½rio
      * realizar uma requisicao via URL ao aplicativo.
-     * É identificado como o terceiro parametro da URL ou o valor padrao
+     * ï¿½ identificado como o terceiro parametro da URL ou o valor padrao
      *
      * http://localhost/index.php/module/controller/action
      *
