@@ -221,7 +221,7 @@ abstract class Ibe_Map {
      * @param int $limit
      * @return Model
      */
-    public function findAll(array $order = array(), $start = 0, $limit = 10000) {
+    public function findAll($order = array(), $start = 0, $limit = 10000) {
         return $this->findAllBy(null, null, $order, $start, $limit);
     }
 
@@ -234,7 +234,7 @@ abstract class Ibe_Map {
      * @param int $limit
      * @return Ibe_Map
      */
-    public function findAllBy($fields, $values, array $orders = array(), $page = 0, $size = 10000) {
+    public function findAllBy($fields, $values,$orders = array(), $page = 0, $size = 10000) {
 
         if (!is_array($orders)) {
             $orders = array($orders=>true);
@@ -254,7 +254,8 @@ abstract class Ibe_Map {
                 ->addOrderBy($order)
                 ->setPage($page)
                 ->setLimit($size);
-       
+        
+        //Ibe_Debug::warn(__FILE__, $query->getQuery());
         return $this->mountObjectsToFinds($query);
     }
 
@@ -282,8 +283,9 @@ abstract class Ibe_Map {
                 ->setPage(0)
                 ->setLimit(1);
 
+        //Ibe_Debug::error(__FILE__." - ".__LINE__, $query->getQuery());
+        
         $executou = $query->execute(false);
-
         if ($executou) {
             $registro = mysql_fetch_array($executou);
 

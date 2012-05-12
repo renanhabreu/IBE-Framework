@@ -19,6 +19,7 @@ abstract class Ibe_Autoload {
      */
     static public function search($class_name) {
         $n = $class_name;
+        
         if (!class_exists($class_name)) {
             $directory = false;
 
@@ -48,14 +49,14 @@ abstract class Ibe_Autoload {
                 if (file_exists($_extension)) {
                     $directory = $_extension;
                 } else {
-                    throw new Exception('A extensão ' . $n . ' não foi encontrada. Deve ser implementada em  [' . $_extension . ']');
+                    throw new Exception('A extensï¿½o ' . $n . ' nï¿½o foi encontrada. Deve ser implementada em  [' . $_extension . ']');
                 }
             }
             if ($directory) {
                 require $directory;
                 return;
             } else {
-                $msg = ($ibe_dir) ? "Classe " . $class_name . " nao foi localizada no repositorio do framework.<br />Esta classe nao foi implementada." : "A classe " . $class_name . " nao foi encontrada.<br/>Verifique a existência dela nos diretorios do aplicativo!";
+                $msg = ($ibe_dir) ? "Classe " . $class_name . " nao foi localizada no repositorio do framework.<br />Esta classe nao foi implementada." : "A classe " . $class_name . " nao foi encontrada.<br/>Verifique a existï¿½ncia dela nos diretorios do aplicativo!";
                 throw new Exception($msg);
             }
         }

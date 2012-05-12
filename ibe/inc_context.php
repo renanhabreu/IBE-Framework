@@ -97,8 +97,8 @@ class Ibe_Context{
     private function initSession(){
         session_start();
         
-        if(!isset($_SESSION['_USER'])){
-            $_SESSION['_USER'] = array();
+        if(!isset($_SESSION['_IBE'])){
+            $_SESSION['_IBE'] = array();
         }
     }
         
@@ -117,4 +117,9 @@ class Ibe_Context{
     public function getAction(){
         return $this->action;
     }
+    
+    public function finalizeSession(){
+        session_destroy();
+    }
+    
 }
