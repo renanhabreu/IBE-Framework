@@ -10,7 +10,7 @@ define("DS",DIRECTORY_SEPARATOR);
  */
 abstract class Ibe_Autoload {
 
-    static private $registred = false;
+    static private $registered = false;
 
     /**
      * Procura por uma classe
@@ -66,9 +66,9 @@ abstract class Ibe_Autoload {
      * Inicializa as configuracoes de load
      */
     static public function activeAutoload() {
-        if (!self::$registred) {
+        if (!self::$registered) {
             spl_autoload_register(array(__CLASS__, 'search'));
-            self::$registred = true;
+            self::$registered = true;
         }
     }
 
