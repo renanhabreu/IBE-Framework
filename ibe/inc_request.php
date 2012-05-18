@@ -17,11 +17,7 @@ class Ibe_Request {
      * @var array
      */
     private $params = array();
-    /**
-     * Usuario atual do sistema
-     * @var Ibe_User
-     */
-    private $user = null;
+   
 
     const IS_BOOLEAN = 'boolean';
     const IS_INTEGER = 'integer';
