@@ -1,5 +1,6 @@
 <?php
-
+$_position = 3;
+$_name = "Acao";
 $_description = "Cria acoes para o aplicativo";
 $_params = array(
     "app"=>"nome da aplicacao",

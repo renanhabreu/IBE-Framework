@@ -1,5 +1,7 @@
 <?php
 
+$_position = 1;
+$_name = "Modulo";
 $_description = "cria um modulo para a aplicacao";
 $_params = array(
     "app"=>"nome da aplicacao",
