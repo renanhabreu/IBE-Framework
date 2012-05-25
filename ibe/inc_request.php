@@ -17,8 +17,8 @@ class Ibe_Request {
      * @var array
      */
     private $params = array();
-   
 
+    
     const IS_BOOLEAN = 'boolean';
     const IS_INTEGER = 'integer';
     const IS_FLOAT   = 'float';

@@ -3,13 +3,13 @@
 abstract class Skt_Core_Prompt{
     const ALERT = 1;
     const ERROR = 2;
-    
+    static private $alert_command_json = array();
     static public function print_($str,$type = NULL){
     
         if(Skt_Core_Request::$request_http){
-            $alert   = "<span style='color:yellow'> :: %s</span><br/>";
-            $error   = "<span style='color:yellow'> :: %s</span><br/>";
-            $default = "<span style='color:yellow'> :: %s</span><br/>";
+            $alert   = "<span style='padding:2px;background:#000; color:#ffaa00'> :: %s</span><br/>";
+            $error   = "<span style='padding:2px;background:#000; color:#b05454'> :: %s</span><br/>";
+            $default = "<span style='padding:2px;background:#000; color:#fff'> :: %s</span><br/>";
         }else{            
             $alert   = "\033[1;33m :: %s\033[0m\r\n";
             $error   = "\033[41;32m :: %s\033[0m\r\n";
@@ -30,8 +30,25 @@ abstract class Skt_Core_Prompt{
                 break;
         }
         
-        echo $retorno;
+        self::show($retorno);
         
+    }
+    
+    static private function show($str){
+        if(Skt_Core_Request::$request_http){  
+            self::$alert_command_json["message"][] = $str;
+        }else{
+            echo $str;
+        }
+    }
+    
+    static public function responseIfHttp(){
+        if(Skt_Core_Request::$request_http){
+            header('Cache-Control: no-cache, must-revalidate');
+            header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+            header('Content-type: application/json');
+            echo json_encode(self::$alert_command_json);
+        }
     }
     
 }

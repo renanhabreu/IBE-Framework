@@ -44,6 +44,8 @@ abstract class Skt_Core_Maker{
             
             $maker = new $mk_class($_directory,$_file);
             $maker->dispatch($req);
+            
+            Skt_Core_Prompt::responseIfHttp();
         }
 
     }
