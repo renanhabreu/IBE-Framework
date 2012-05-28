@@ -1,6 +1,6 @@
 <?php
 $_position = 0;
-$_name = "aplicacao";
+$_name = "Aplicacao";
 $_description = "cria uma nova aplicacao no repositorio de aplicativos";
 $_params = array(
     "app"=>"nome da aplicacao"

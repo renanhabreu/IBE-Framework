@@ -18,7 +18,7 @@ executar_outra(){
    echo -n "Informe os parametros: "
    read opcao
    
-   php "index.php" $fab app:$_app $opcao
+   php "ibe.php" $fab app:$_app $opcao
    chmod -R 777 $_rep
    mostrar_menu
 } 
@@ -66,7 +66,7 @@ criar_acao(){
    echo -n "Qual o nome da acao? "
    read act
    
-   php "index.php" act app:$_app mod:$mod ctr:$ctr act:$act
+   php "ibe.php" act app:$_app mod:$mod ctr:$ctr act:$act
    chmod -R 777 $_rep
    mostrar_menu
 }
@@ -80,7 +80,7 @@ criar_controlador(){
    echo -n "Qual o nome do controlador? "
    read ctr
    
-   php "index.php" ctr app:$_app mod:$mod ctr:$ctr 
+   php "ibe.php" ctr app:$_app mod:$mod ctr:$ctr 
    chmod -R 777 $_rep
    mostrar_menu
 }
@@ -91,14 +91,14 @@ criar_modulo(){
    read mod
    
    
-   php "index.php" mod app:$_app mod:$mod 
+   php "ibe.php" mod app:$_app mod:$mod 
    chmod -R 777 $_rep
    mostrar_menu
 }
 
 criar_aplicacao(){
    
-   php "index.php" app app:$_app
+   php "ibe.php" app app:$_app
    chmod -R 777 $_rep
    mostrar_menu
 }
@@ -117,7 +117,7 @@ criar_mapa(){
    echo -n "Qual o esquema? "
    read schm
    
-   php "index.php" map app:$_app host:$host user:$user pass:$pass schm:$schm
+   php "ibe.php" map app:$_app host:$host user:$user pass:$pass schm:$schm
    chmod -R 777 $_rep
    mostrar_menu
 }

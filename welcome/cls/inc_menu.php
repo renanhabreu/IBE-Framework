@@ -41,8 +41,10 @@ class Menu{
                     $mk->setDescription($_description);
                     $mk->setExample($_example);
                     $mk->setParams($_params);
+                    $mk->setPath($maker);
                     
                     $position = Maker::registerId($_position);
+                    $mk->setId($position);
                     $this->makers[$position] = $mk;                
                 }
             }

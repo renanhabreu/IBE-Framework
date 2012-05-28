@@ -14,7 +14,7 @@ class Skt_Core_Request {
             $url = explode('/', rtrim($_SERVER['REQUEST_URI']," \t\n\r\0/"));
             $exit = false;
 
-            $index = array_search('index.php', $url);
+            $index = array_search('ibe.php', $url);
             
             if ($index) {
                 $slices = array_slice($url, 0, $index);

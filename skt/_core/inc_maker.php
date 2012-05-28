@@ -35,7 +35,6 @@ abstract class Skt_Core_Maker{
         
     static public function run($argv){
         $req = new Skt_Core_Request($argv);
-        
         if($req->getMaker()){
             $mk_class = implode("_",array_map("ucfirst",explode("_",strtolower($req->getMaker()))));
             

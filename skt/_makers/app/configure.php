@@ -17,7 +17,7 @@ class Configure extends stdClass{
     );
     
     public $index = array(
-        "dir_frm"=>"../../ibe",
+        "dir_frm"=>"../framework",
         "mod"=>"index",
         "ctr"=>"index",
         "act"=>"index"

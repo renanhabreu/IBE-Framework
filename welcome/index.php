@@ -13,42 +13,71 @@
 
         <meta name="viewport" content="width=device-width">
 
+        <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/blueprint/screen.css" type="text/css" media="screen, projection">
         <link rel="stylesheet" href="css/blueprint/print.css" type="text/css" media="print"> 
         <!--[if lt IE 8]>
             <link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection">
         <![endif]-->
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/overcast/jquery-ui-1.8.20.custom.css" type="text/css" media="screen, projection">
-        
-        
+        <link rel="stylesheet" href="css/south-street/jquery-ui-1.8.20.custom.css" type="text/css" media="screen, projection">
+        <link rel="stylesheet" href="css/custom.css">
+
         <script src="js/libs/jquery-1.7.2.min.js"></script>
         <script src="js/libs/jquery-ui-1.8.20.custom.min.js"></script>
         <script src="js/libs/modernizr-2.5.3.min.js"></script>
-        
-        
+
+
     </head>
     <body>
         <header>
 
         </header>
-                
+
         <div role="main" class="container">
-              
-            <div class="append-6 prepend-6 span-12- last">
-                
-                <div id="skt-menu">
-                    <?php 
-                        include_once 'cls/inc_menu.php';
-                        
-                        Menu::get()->show();
-                    ?>
+            <div class="span-24 last">
+
+                <div id="skt-menu-fixo" class="ui-widget ui-widget-content ui-corner-all">
+                    <div class="ui-widget-header">
+                        <h5>Criador de códigos ibe-framework 1.1 (inspired + beautiful + elegant:)</h5>
+                    </div>
+                    <div id ="skt-menu-alert-content" class="ui-widget-content">
+                        Para seu criador de códigos aparecer na listagem abaixo 
+                        será preciso que você siga as regras de criação. 
+                        Tais funcionalidades são conhecidas por makers e precisam dos seguintes arquivos:
+                        <em>_makers/nomeDoMaker/configure.php; _makers/nomeDoMaker/help.php; _makers/nomeDoMaker/action.php;</em>
+                    </div>
                 </div>
-                
+
             </div>
             
+            <div class="span-10">
+
+                <div id="skt-menu">
+                    <?php
+                    include_once 'cls/inc_menu.php';
+                    Menu::get()->show();
+                    ?>
+                </div>
+
+            </div>
+
+            <div class="span-14 last">
+
+                <div id="skt-menu-alert" class="ui-widget ui-widget-content ui-corner-all">
+                    <div class="ui-widget-header">
+                        <h5>Maker Information</h5>
+                    </div>
+                    <div id ="skt-menu-alert-content" class="ui-state-highlight">
+                        <p>
+                            Nenhuma ação foi executada !
+                        </p>
+                    </div>
+                </div>
+
+            </div>            
+
         </div>
-        
+
         <footer>
 
         </footer>

@@ -1,0 +1,20 @@
+/* ===== Primary Styles ========================================================
+   Author:
+   ========================================================================== */
+#skt-menu, #skt-menu-alert{ margin-top:20px; min-height: 550px}
+#skt-menu-alert h5, 
+#skt-menu-alert-content h5,#skt-menu-fixo h5{ margin:0; padding:5px;}
+#skt-menu-alert .ui-state-highlight, 
+#skt-menu-alert-content .ui-widget-content ,#skt-menu-fixo .ui-widget-content{padding:5px; margin-top: 2px;}
+input{
+    width: 322px;
+    padding: 5px 3px;
+}
+#skt-menu-alert, 
+#skt-menu-alert-content,#skt-menu-fixo{ padding: 5px;}
+
+button{ float: right;}
+.skt-description { padding: 5px; font-family: Gill, Helvetica, sans-serif; }
+
+#skt-menu-fixo { margin: 5px;}
+
