@@ -22,14 +22,13 @@ $(document).ready(function(){
             
             $('input:[name='+name+']').val(vl);
         });
-        
-        $.getJSON("../skt/ibe.php/"+action, function(response){
+        $.getJSON("../skt/ibe.php/"+action, function(response){            
             var html = "";
             var alert = $("#skt-menu-alert-content").find("p");
             for(var i in response.message){
                 html += response.message[i];
             }
-            alert.text("");
+            alert.text("Log:");
             alert.html(html);
         }).complete(function(){
             btn.button("enable");

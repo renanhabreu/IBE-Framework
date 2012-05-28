@@ -40,7 +40,7 @@
                     <div class="ui-widget-header">
                         <h5>Criador de códigos ibe-framework 1.1 (inspired + beautiful + elegant:)</h5>
                     </div>
-                    <div id ="skt-menu-alert-content" class="ui-widget-content">
+                    <div id ="skt-menu-fixo-content" class="ui-widget-content">
                         Para seu criador de códigos aparecer na listagem abaixo 
                         será preciso que você siga as regras de criação. 
                         Tais funcionalidades são conhecidas por makers e precisam dos seguintes arquivos:
