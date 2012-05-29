@@ -1,13 +1,13 @@
 <?php
 
-class Ibe_Context{
+class Ibe_Context {
+
     static private $instance = NULL;
-    
     private $url_base = NULL;
     private $module = NULL;
     private $controller = NULL;
     private $action = NULL;
-    
+
     /**
      *
      * @param type $module
@@ -15,36 +15,34 @@ class Ibe_Context{
      * @param type $action
      * @return Ibe_Context
      */
-    static public function getInstance($module = NULL,$controller = NULL,$action = NULL){
-        if(is_null(self::$instance)){
-            self::$instance = new self($module,$controller,$action);
+    static public function getInstance($module = NULL, $controller = NULL, $action = NULL) {
+        if (is_null(self::$instance)) {
+            self::$instance = new self($module, $controller, $action);
         }
-        
+
         return self::$instance;
     }
-    
-    private function __construct($module,$controller,$action){
-        
-        $this->initSession();
-        
-        
-        $url = explode('/', rtrim($_SERVER['REQUEST_URI']," \t\n\r\0/"));
+
+    private function __construct($module, $controller, $action) {
+
+
+        $url = explode('/', rtrim($_SERVER['REQUEST_URI'], " \t\n\r\0/"));
         $exit = false;
         $index = array_search('index.php', $url);
-        
-        if(($_ = strstr($_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'],'index.php',true))){
-			$this->url_base = 'http://'.$_; 
-		}else{
-			$this->url_base = 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-		}
-		
+
+        if (($_ = strstr($_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'], 'index.php', true))) {
+            $this->url_base = 'http://' . $_;
+        } else {
+            $this->url_base = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        }
+
         if ($index) {
-            $slices = array_slice($url, 0, $index);        
+            $slices = array_slice($url, 0, $index);
         } else {
             array_pop($url);
             $slices = $url;
         }
-		
+
         if ($index) {
             $url = array_slice($url, ++$index, sizeof($url));
             $size = sizeof($url);
@@ -78,48 +76,36 @@ class Ibe_Context{
                     break;
             }
         }
-        
-        if(!is_null($module)){
-            $this->module     = $module;
+
+        if (!is_null($module)) {
+            $this->module = $module;
         }
-        
-        if(!is_null($controller)){
+
+        if (!is_null($controller)) {
             $this->controller = $controller;
         }
-        
-        if(!is_null($action)){
-            $this->action     = $action;
+
+        if (!is_null($action)) {
+            $this->action = $action;
         }
 
         return TRUE;
     }
-    
-    private function initSession(){
-        session_start();
-        
-        if(!isset($_SESSION['_IBE'])){
-            $_SESSION['_IBE'] = array();
-        }
-    }
-        
-    public function getUrlBase(){
+
+    public function getUrlBase() {
         return $this->url_base;
     }
-   
-    public function getModule(){
+
+    public function getModule() {
         return $this->module;
     }
-    
-    public function getController(){
+
+    public function getController() {
         return $this->controller;
     }
-    
-    public function getAction(){
+
+    public function getAction() {
         return $this->action;
     }
-    
-    public function finalizeSession(){
-        session_destroy();
-    }
-    
+
 }

@@ -1,6 +1,7 @@
 <?php
+
 // DIRECTORY_SEPARATOR alias
-define("DS",DIRECTORY_SEPARATOR);
+define("DS", DIRECTORY_SEPARATOR);
 
 /**
  * Classe de includes automatico da classes do aplicativo.
@@ -11,6 +12,7 @@ define("DS",DIRECTORY_SEPARATOR);
 abstract class Ibe_Autoload {
 
     static private $registered = false;
+    static private $framework_path = false;
 
     /**
      * Procura por uma classe
@@ -19,7 +21,7 @@ abstract class Ibe_Autoload {
      */
     static public function search($class_name) {
         $n = $class_name;
-        
+
         if (!class_exists($class_name)) {
             $directory = false;
 
@@ -35,23 +37,22 @@ abstract class Ibe_Autoload {
             $class_dir[$size] = 'inc_' . $class_dir[$size];
 
             if ($ibe_dir) {
-                $dir_file_class = implode('/', $class_dir);
-                $framework_dir = FW_ROOT . $dir_file_class . '.php';
-				
 
-                if(!$directory && file_exists($framework_dir)){
+                $framework_dir = self::$framework_path . implode('/', $class_dir) . '.php';
+
+                if (file_exists($framework_dir)) {
                     $directory = $framework_dir;
                 }
-                
             } else if ($ext_dir) {
                 $_extension = '_extensions/' . implode('/', $class_dir) . '.php';
                 //Ibe_Debug::dispatchAlert(__FILE__,$_extension);
                 if (file_exists($_extension)) {
                     $directory = $_extension;
                 } else {
-                    throw new Exception('A extens�o ' . $n . ' n�o foi encontrada. Deve ser implementada em  [' . $_extension . ']');
+                    throw new Exception('A extensao ' . $n . ' nao foi encontrada. Deve ser implementada em  [' . $_extension . ']');
                 }
             }
+
             if ($directory) {
                 require $directory;
                 return;
@@ -77,12 +78,11 @@ abstract class Ibe_Autoload {
      * @param string $dir
      */
     static public function frameworkDirectoryRegister($dir) {
-        if (!defined('FW_ROOT')) {
-            if (is_dir($dir)) {
-                define('FW_ROOT', $dir.DS);
-            } else {
-                throw new Exception('Diretorio ' . $directory . 'do framework nao encontrado');
-            }
+
+        if (is_dir($dir)) {
+            self::$framework_path = $dir . DS;
+        } else {
+            throw new Exception('Diretorio ' . $directory . 'do framework nao encontrado');
         }
         self::activeAutoload();
     }

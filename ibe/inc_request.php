@@ -85,7 +85,20 @@ class Ibe_Request {
         $view = new Ibe_View($view_app,$view_mod,$view_ctr,$action);
         $view->show($template);
     }
-
+    
+    static public function initSession(){
+        session_start();
+        
+        if(!isset($_SESSION['_IBE'])){
+            $_SESSION['_IBE'] = array();
+        }
+    }
+    
+    
+    static public function finalizeSession(){
+        session_destroy();
+    }
+    
     /**
      * Retorna um array com todos os parametros passados como post, get e cookies
      * tratados

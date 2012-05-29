@@ -1,6 +1,6 @@
 <?php
-
-$_description = "cria mapas para o aplicativo localizados em _maps";
+$_name = "Mapa - ORM";
+$_description = "cria mapas,  localizados em _maps, para o aplicativo";
 $_params = array(
     "host"=>"host do banco [default = localhost]",
     "user"=>"usuario do banco [default = root]",

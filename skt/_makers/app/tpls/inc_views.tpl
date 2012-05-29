@@ -3,12 +3,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta content="renan henrique abreu" name="renan abreu"/>
-        <title>Renan Abreu</title>
+        <title>Application</title>
         <!-- Framework CSS -->
         
     </head>
     <body>
-        <div style="border:1px solid #ccc">
+        <div style="border:1px solid #ccc; padding: 5px;">
             <?php echo $this->view_module; ?>
         </div>
     </body>
