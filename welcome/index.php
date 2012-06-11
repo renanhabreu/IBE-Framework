@@ -50,18 +50,7 @@
 
             </div>
             
-            <div class="span-10">
-
-                <div id="skt-menu">
-                    <?php
-                    include_once 'cls/inc_menu.php';
-                    Menu::get()->show();
-                    ?>
-                </div>
-
-            </div>
-
-            <div class="span-14 last">
+            <div class="span-14">
 
                 <div id="skt-menu-alert" class="ui-widget ui-widget-content ui-corner-all">
                     <div class="ui-widget-header">
@@ -76,6 +65,18 @@
 
             </div>            
 
+            
+            <div class="span-10 last">
+
+                <div id="skt-menu">
+                    <?php
+                    include_once 'cls/inc_menu.php';
+                    Menu::get()->show();
+                    ?>
+                </div>
+
+            </div>
+            
         </div>
 
         <footer>

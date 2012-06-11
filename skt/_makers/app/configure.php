@@ -9,6 +9,7 @@ class Configure extends stdClass{
         "_maps",
         "_modules",
         "_plugins",
+        "_logs",
         "_rsc",
         "_rsc/js",
         "_rsc/img",
