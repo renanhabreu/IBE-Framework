@@ -1,8 +1,9 @@
 <?php
+
 /**
  * Classe para ajuda no debug da aplicacao
+ * 
  * @author Renan Abreu
- * @version 20102011
  * @package ibe
  */
 abstract class Ibe_Debug {
@@ -18,14 +19,14 @@ abstract class Ibe_Debug {
     /**
      * Habilita o debug
      */
-    static public function enable(){
+    static public function enable() {
         self::$debug_mode = true;
     }
 
     /**
      * Desabililta o debug
      */
-    static public function disable(){
+    static public function disable() {
         self::$debug_mode = false;
     }
 
@@ -33,7 +34,7 @@ abstract class Ibe_Debug {
      * Verifica se o debug esta ativo
      * @return boolean
      */
-    static public function isEnable(){
+    static public function isEnable() {
         return self::$debug_mode;
     }
 
@@ -44,19 +45,33 @@ abstract class Ibe_Debug {
         $size = memory_get_usage();
         $unit = array('B', 'Kb', 'Mb', 'Gb', 'Tb', 'Pb');
         $memory = @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
-        Ibe_Debug::dispatchAlert('APP IBE SIZE MEMORY', $memory);
+        Ibe_Debug::warn('APP IBE SIZE MEMORY', $memory);
     }
 
     /**
-     * Salva $data no arquivo de log chamado log.log na pasta logs do framework
-     * @param mixed $data
+     * Salva o resultado do debug de uma variavel em um arquivo de log nas pasta
+     * especificada pela variavel de classe log_path
+     * 
+     * @param string $title {Para facilitar o encontro utilize __FILE__ }
+     * @param mixed $content 
      */
-    static public function log($data) {
-        file_put_contents('logs/log.log', $data);
+    static public function save($title, $content, $type = 'txt') {
+
+        $log = str_repeat('-', strlen($title) + 8);
+        $log .= "\n--- $title \n";
+        $log .= "--- " . date("d/m/Y  H:i:s") . " \n";
+        $log .= str_repeat('-', strlen($title) + 8) . "\n";
+        $log .= $content;
+        $log .= "\n\n";
+
+        $file_path = '_logs/' . md5($title) . "__" . date("dmy") . "." . $type;
+
+        file_put_contents($file_path, $log, FILE_APPEND);
     }
 
     /**
      * Inicia a contagem de tempo onde $name é o identificador para inicio da contagem
+     * 
      * @param string $name
      */
     static public function timeExecutionInit($name) {
@@ -82,43 +97,41 @@ abstract class Ibe_Debug {
 
     /**
      * Mensagem padrao do ibe de alerta para excecoes, error ou debugs
+     * 
      * @param string $title
      * @param mixed $content
-     * @param bool $var_dump
-	 * @deprecated
      */
-    static public function dispatchAlert($title, $content, $var_dump = false) {
-
-        echo "<pre style='padding-left:10px; font-size:12px; text-align:left'>";
-        echo "<div style='margin:20px; border:1px solid black;'>";
-        echo "<div style='background:#E0CD00; padding:5px;color:#000;font-size:14px'>";
-        echo "::: ALERT ! " . strtoupper($title) . " :::";
-        echo "</div>";
-        echo '<div style="padding:10px; overflow:scroll" >';
-        if (!$var_dump)
-            print_r($content);
-        else
-            var_dump($content);
-        echo '</div>';
-        echo "</div>";
-        echo "</pre>";
+    static public function error($title, $content) {
+        self::printMe($title, $content, false, "#c91616");
+        exit();
     }
 
     /**
      * Mensagem padrao do ibe de alerta para excecoes, error ou debugs
+     * 
      * @param string $title
      * @param mixed $content
-     * @param bool $var_dump
-	 * @deprecated
      */
-    static public function dispatchError($title, $content, $var_dump = false) {
-
-        echo "<pre style='padding-left:10px; font-size:12px'>";
+    static public function warn($title, $content) {
+        self::printMe($title, $content, false, "#E0CD00");
+    }
+    
+    /**
+     * Imprime uma mensagem generica de debug
+     * 
+     * @param string $title <padrao __FILE__ >
+     * @param mixed $content
+     * @param boolean $var_dump <FALSE>
+     * @param string $color  <#C90000>
+     */
+    static public function printMe($title, $content, $var_dump = FALSE, $color = "#C90000") {
+        echo "<div style='z-index:9999999;  background-color:#2f2f2f; color:#fff'; padding:40px;'>";
+        echo "<pre style='padding-left:10px; font-size:12px; margin:10px;>";
         echo "<div style='margin:20px; border:1px solid black;'>";
-        echo "<div style='background:#C90000; padding:5px;color:#fff;font-size:14px'>";
-        echo "::: ERROR ! " . strtoupper($title) . " :::";
+        echo "<div style='background:$color; padding:5px;color:#fff;font-size:14px'>";
+        echo "::: " . strtoupper($title) . " :::";
         echo "</div>";
-        echo '<div style="padding:10px; overflow:scroll">';
+        echo '<div style="padding:10px; overflow:scroll; text-align:left; background-color:#fff; color:#000 ">';
         if (!$var_dump)
             print_r($content);
         else
@@ -126,17 +139,8 @@ abstract class Ibe_Debug {
         echo '</div>';
         echo "</div>";
         echo "</pre>";
-        exit();
+        echo "</div>";
     }
-    
-    static public function error($title,$content){
-		self::dispatchError($title,$content);
-	}
-	
-    static public function warn($title,$content){
-		self::dispatchAlert($title,$content);
-	}
 
 }
-
 

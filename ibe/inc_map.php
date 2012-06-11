@@ -1,9 +1,12 @@
 <?php
 
 /**
- * Classe de mapeamento das tabelas do banco de dados
+ * O pacote mapa é o único pacote que o framework da o suporte nativamente. 
+ * Ele é a parte ORM das aplicações, porém, o desenvolvedor não precisa se 
+ * limitar a tal pacote. As classes aqui encontradas podem são criadas 
+ * automaticamente pelo Fabricante de códigos map
+ * 
  * @author Renan Abreu
- * @version 20102011
  * @package ibe
  */
 abstract class Ibe_Map {

@@ -2,6 +2,7 @@
 
 // DIRECTORY_SEPARATOR alias
 define("DS", DIRECTORY_SEPARATOR);
+define("IBE_FRAMEWORK_PATH", __DIR__ . DS);
 
 /**
  * Classe de includes automatico da classes do aplicativo.
@@ -10,9 +11,6 @@ define("DS", DIRECTORY_SEPARATOR);
  * @package ibe
  */
 abstract class Ibe_Autoload {
-
-    static private $registered = false;
-    static private $framework_path = false;
 
     /**
      * Procura por uma classe
@@ -38,7 +36,7 @@ abstract class Ibe_Autoload {
 
             if ($ibe_dir) {
 
-                $framework_dir = self::$framework_path . implode('/', $class_dir) . '.php';
+                $framework_dir = IBE_FRAMEWORK_PATH. implode('/', $class_dir) . '.php';
 
                 if (file_exists($framework_dir)) {
                     $directory = $framework_dir;
@@ -67,24 +65,18 @@ abstract class Ibe_Autoload {
      * Inicializa as configuracoes de load
      */
     static public function activeAutoload() {
-        if (!self::$registered) {
             spl_autoload_register(array(__CLASS__, 'search'));
-            self::$registered = true;
-        }
     }
 
     /**
      * Registra o diretorio das funcionalidades de ajuda
      * @param string $dir
+     * @deprecated
      */
-    static public function frameworkDirectoryRegister($dir) {
-
-        if (is_dir($dir)) {
-            self::$framework_path = $dir . DS;
-        } else {
-            throw new Exception('Diretorio ' . $directory . 'do framework nao encontrado');
-        }
+    static public function frameworkDirectoryRegister($dir = NULL) {
         self::activeAutoload();
     }
 
 }
+
+Ibe_Autoload::activeAutoload();
