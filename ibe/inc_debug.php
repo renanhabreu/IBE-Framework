@@ -92,7 +92,7 @@ abstract class Ibe_Debug {
             throw new Ibe_Exception('O timeExecution ' . $name . ' nao foi inicializado');
         }
         $time = number_format($tempo - self::$times[$name]['init'], 5, ',', ' ');
-        Ibe_Debug::dispatchAlert('TEMPO DE EXECUCAO', $time);
+        Ibe_Debug::warn('TEMPO DE EXECUCAO', $time);
     }
 
     /**
@@ -102,7 +102,7 @@ abstract class Ibe_Debug {
      * @param mixed $content
      */
     static public function error($title, $content) {
-        self::printMe($title, $content, false, "#c91616");
+        self::printMe( $content, false, "#c91616");
         exit();
     }
 
@@ -113,7 +113,7 @@ abstract class Ibe_Debug {
      * @param mixed $content
      */
     static public function warn($title, $content) {
-        self::printMe($title, $content, false, "#E0CD00");
+        self::printMe($content, false, "#E0CD00");
     }
     
     /**
@@ -124,18 +124,36 @@ abstract class Ibe_Debug {
      * @param boolean $var_dump <FALSE>
      * @param string $color  <#C90000>
      */
-    static public function printMe($title, $content, $var_dump = FALSE, $color = "#C90000") {
-        echo "<div style='z-index:9999999;  background-color:#2f2f2f; color:#fff'; padding:40px;'>";
+    static public function printMe($content, $var_dump = FALSE, $color = "#C90000") {
+        if(is_bool($content)){
+            $content = ($content)? 'TRUE':'FALSE';
+        }
+        
+        $calls = debug_backtrace();
+        $call_list = "<b>FILE:</b> ".$calls[1]['file']." <b>LINE:</b> ".$calls[1]['line'];
+       
+        $style = implode(";",array(
+            "position:relative",
+            "z-index:9999999",
+            "background-color:#2f2f2f",
+            "color:#fff", 
+            "padding:4px"
+        ));
+        
+        echo "<div style='$style'>";
         echo "<pre style='padding-left:10px; font-size:12px; margin:10px;>";
         echo "<div style='margin:20px; border:1px solid black;'>";
         echo "<div style='background:$color; padding:5px;color:#fff;font-size:14px'>";
-        echo "::: " . strtoupper($title) . " :::";
+        echo "::: DEBUG :::";
         echo "</div>";
         echo '<div style="padding:10px; overflow:scroll; text-align:left; background-color:#fff; color:#000 ">';
         if (!$var_dump)
             print_r($content);
         else
             var_dump($content);
+        echo '<div style="margin-top:10px; border-top:1px solid #000;">';
+        echo $call_list;
+        echo '</div>';
         echo '</div>';
         echo "</div>";
         echo "</pre>";
