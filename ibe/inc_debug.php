@@ -44,7 +44,7 @@ abstract class Ibe_Debug {
         $size = memory_get_usage();
         $unit = array('B', 'Kb', 'Mb', 'Gb', 'Tb', 'Pb');
         $memory = @round($size / pow(1024, ($i = floor(log($size, 1024)))), 2) . ' ' . $unit[$i];
-        Ibe_Debug::warn('APP IBE SIZE MEMORY', $memory);
+        Ibe_Debug::warn($memory);
     }
 
     /**
@@ -91,7 +91,7 @@ abstract class Ibe_Debug {
             throw new Ibe_Exception('O timeExecution ' . $name . ' nao foi inicializado');
         }
         $time = number_format($tempo - self::$times[$name]['init'], 5, ',', ' ');
-        Ibe_Debug::warn('TEMPO DE EXECUCAO', $time);
+        Ibe_Debug::warn($time);
     }
 
     /**
@@ -119,7 +119,7 @@ abstract class Ibe_Debug {
      * Imprime uma mensagem generica de debug
      * 
      * @param mixed $content
-     * @param boolean $var_dump <FALSE>
+     * @param boolean $var_dump FALSE
      * @param string $color  <#C90000>
      */
     static public function printMe($content, $var_dump = FALSE, $color = "#C90000") {
