@@ -118,7 +118,6 @@ abstract class Ibe_Debug {
     /**
      * Imprime uma mensagem generica de debug
      * 
-     * @param string $title <padrao __FILE__ >
      * @param mixed $content
      * @param boolean $var_dump <FALSE>
      * @param string $color  <#C90000>
