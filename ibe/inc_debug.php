@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Classe para ajuda no debug da aplicacao
  * 
