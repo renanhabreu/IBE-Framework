@@ -100,7 +100,7 @@ abstract class Ibe_Debug {
      * @param string $title
      * @param mixed $content
      */
-    static public function error($title, $content) {
+    static public function error($content) {
         self::printMe( $content, false, "#c91616");
         exit();
     }
@@ -111,7 +111,7 @@ abstract class Ibe_Debug {
      * @param string $title
      * @param mixed $content
      */
-    static public function warn($title, $content) {
+    static public function warn($content) {
         self::printMe($content, false, "#E0CD00");
     }
     
