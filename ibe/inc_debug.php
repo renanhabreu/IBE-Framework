@@ -112,7 +112,7 @@ abstract class Ibe_Debug {
      * @param mixed $content
      */
     static public function warn($content) {
-        self::printMe($content, false, "#E0CD00");
+        self::printMe($content, false,"#E0CD00");
     }
     
     /**
