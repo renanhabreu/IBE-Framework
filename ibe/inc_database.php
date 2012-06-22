@@ -20,9 +20,7 @@ abstract class Ibe_Database {
      * @param string $schema
      */
     static public function open($host, $user, $pass, $schema) {
-        /* if(!isset (self::$conn)){
-          include_once Ibe_Register::get('SIGO_CAMINHO_RAIZ') . "includes/banco.php";
-          } */
+      
         @self::$conn = mysql_connect($host,$user,$pass);
         if (!self::$conn) {
             throw new Ibe_Exception_Database(mysql_error(),null,false);
