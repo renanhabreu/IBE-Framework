@@ -1,7 +1,7 @@
 <?php
 
 //incluindo o arquivo que contem a classe de autoload
-include '@DIR_FRM@/inc_autoload.php';
+include '@DIR_FRM@/ibe/inc_autoload.php';
 
 try{
 

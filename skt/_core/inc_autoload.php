@@ -76,15 +76,7 @@ abstract class Skt_Core_Autoload{
      * Registra o diretorio das funcionalidades de ajuda
      * @param string $dir
      */
-    static public function appDirectoryRegister($dir = "../apps") {
-        if (!defined('APP_DIR')) {
-            if(!is_dir($dir)){
-                mkdir($dir,777,true);
-            }
-            
-            define('APP_DIR', $dir.DS);
-        }
-        
+    static public function appDirectoryRegister() {
         self::activeAutoload();
     }
 

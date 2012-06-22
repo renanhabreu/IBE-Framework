@@ -6,7 +6,7 @@ class Configure extends stdClass{
         "host"=>"localhost",
         "user"=>"root",
         "pass"=>"",
-        "schm"=>"test"
+        "schm"=>"teste"
     );
     
     public $type = array(
