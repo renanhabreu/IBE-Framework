@@ -34,6 +34,7 @@
         </header>
 
         <div role="main" class="container">
+            
             <div class="span-24 last">
 
                 <div id="skt-menu-fixo" class="ui-widget ui-widget-content ui-corner-all">
@@ -51,8 +52,23 @@
             </div>
             
             <div class="span-14">
-
+                
+                <div id ="skt-general" class="ui-widget ui-widget-content ui-corner-all">
+                    <div class="ui-widget-header">
+                        <h5>Maker General Configuration</h5>
+                    </div>
+                    <div id ="skt-general-configuration">
+                        <form>
+                            <label>
+                                Repository Applications<br/>
+                                <input type="text" name="repository-app"/>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                
                 <div id="skt-menu-alert" class="ui-widget ui-widget-content ui-corner-all">
+                    
                     <div class="ui-widget-header">
                         <h5>Maker Information</h5>
                     </div>
@@ -61,6 +77,7 @@
                             Nenhuma ação foi executada !
                         </p>
                     </div>
+                    
                 </div>
 
             </div>            
@@ -70,17 +87,18 @@
 
                 <div id="skt-menu">
                     <?php
-                    include_once 'cls/inc_menu.php';
-                    Menu::get()->show();
+                        include_once 'cls/inc_menu.php';
+                        Menu::get()->show();
                     ?>
                 </div>
 
             </div>
             
+            
         </div>
 
         <footer>
-
+            
         </footer>
 
         <script src="js/plugins.js"></script>

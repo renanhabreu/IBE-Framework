@@ -1,15 +1,21 @@
 /* ===== Primary Styles ========================================================
    Author:
    ========================================================================== */
-#skt-menu, #skt-menu-alert{ margin-top:20px; min-height: 550px}
+#skt-menu,#skt-general, #skt-menu-alert{ margin-top:20px;}
+#skt-menu-alert { height:300px; }
+#skt-general { height:280px; }
+#skt-menu{ height:600px;}
+#skt-general h5,
 #skt-menu-alert h5, 
 #skt-menu-alert-content h5,#skt-menu-fixo h5{ margin:0; padding:5px;}
+#skt-general form,
 #skt-menu-alert .ui-state-highlight, 
 #skt-menu-alert-content .ui-widget-content ,#skt-menu-fixo .ui-widget-content{padding:5px; margin-top: 2px;}
 input{
     width: 322px;
     padding: 5px 3px;
 }
+#skt-general,
 #skt-menu-alert, 
 #skt-menu-alert-content,#skt-menu-fixo{ padding: 5px;}
 
