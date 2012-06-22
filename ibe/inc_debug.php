@@ -101,7 +101,7 @@ abstract class Ibe_Debug {
      * @param mixed $content
      */
     static public function error($content) {
-        self::printMe( $content, false, "#c91616");
+        self::printMe( $content, false,"#c91616");
         exit();
     }
 

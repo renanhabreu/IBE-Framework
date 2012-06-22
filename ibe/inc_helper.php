@@ -36,9 +36,9 @@ abstract class Ibe_Helper extends Ibe_Object {
     /**
      * Metodo magico que executa o helper
      * 
-     * @param type $name
-     * @param type $arguments
-     * @return type 
+     * @param string $name
+     * @param array $arguments
+     * @return mixed 
      */
     public function __call($name, $arguments) {
 

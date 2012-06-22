@@ -115,11 +115,8 @@ abstract class Ibe_Database_Query{
                 $query = $this->getQuery();
             }
 
-            $result = mysql_query($query);
-            if (!$result) {
-                throw new Ibe_Exception(Ibe_Exception::FALHA_DE_SQL,array(mysql_error(),$query));
-            }
-
+            $result = Ibe_Database::execute($query);
+            
             if($mount_array){
                 $array_results = array();
                 while (($obj = mysql_fetch_object($result))) {
