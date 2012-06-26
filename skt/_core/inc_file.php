@@ -38,7 +38,7 @@ class Skt_Core_File{
         foreach($params as $param_name=>$param_value){            
             $str = str_replace(strtoupper("@".$param_name."@"),$param_value,$str);
         }
-        
+               
         if(file_put_contents($local.DS.$alias.".php",$str)){            
             Skt_Core_Prompt::print_("Arquivo baseado em template inserido [".$name.".php]");  
         }

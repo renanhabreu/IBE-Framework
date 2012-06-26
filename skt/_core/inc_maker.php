@@ -2,8 +2,17 @@
 
 
 abstract class Skt_Core_Maker{
+    /**
+     * @var Configure
+     */
     protected $_configure = NULL;
+    /**
+     * @var Skt_Core_Directory
+     */
     protected $_directory = NULL;
+    /**
+     * @var Skt_Core_File
+     */
     protected $_file = NULL;
     protected $_dir_app = NULL;
     protected $_dir_mod = NULL;
