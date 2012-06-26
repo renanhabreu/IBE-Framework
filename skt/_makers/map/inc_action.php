@@ -60,7 +60,7 @@ class Map extends Skt_Core_Maker {
                 /// Comentario inicial
                 $file_php = "<?php\n\n";
                 $file_php .= "/**\n";
-                $file_php .= " * Mapeamento Objeto Relacional \n *\n *\n *\n";
+                $file_php .= " * Mapeamento Objeto Relacional \n *\n";
 
                 //Configurando os metodos campos
                 if (isset($tbl_confs['field'])) {
@@ -71,11 +71,11 @@ class Map extends Skt_Core_Maker {
                 }
 
                 $file_php .= " * @date " . date('d/m/Y') . "\n";
-                $file_php .= " * @autor Renan Henrique Abreu<renanhabreu@gmail.com>\n";
+                $file_php .= " * @autor Renan Henrique Abreu<renanhabreu@gmail.com> SKT\n";
                 $file_php .= " */\n";
 
                 /// Criacao da classe
-                $file_php .= "class " .$name. "Map extends Ibe_Map{\n\n";
+                $file_php .= "class " .$name. "Table extends Ibe_Map{\n\n";
                 $file_php .= "\tprotected function configure(){\n";
                 $file_php .= "\t\t\$this->table_name  = '" . $schema. "." . $tbl_name . "';\n";
                 $file_php .= "\t\t\$this->primary_key = '" . $tbl_confs['primary_key'][0] . "';\n";
@@ -109,9 +109,24 @@ class Map extends Skt_Core_Maker {
                 $file_php .='}';
 
                 //Criando o arquivo
-                $dir = $this->_dir_app."_maps".DS;
+                $dir = $this->_dir_app."_maps".DS."tables".DS;
                 if(is_dir($dir)){
-                    file_put_contents($dir . 'inc_'.strtolower($name) . '.php', $file_php);            
+                    file_put_contents($dir . 'tbl_'.strtolower($name) . '.php', $file_php);
+                    
+                    $map = "_maps".DS.'inc_'.strtolower($name) . '.php';
+                    if(!file_exists($this->_dir_app.$map)){
+                        $include = "_maps".DS."tables".DS;
+                        $file_php = "<?php\n\n";
+                        $file_php .= "include_once('". $include.'tbl_'.strtolower($name) . '.php'."');\n\n\n";
+                        $file_php .= "/**\n";
+                        $file_php .= " * Classe de regras de negocio \n *\n";
+                        $file_php .= " * @date " . date('d/m/Y') . "\n";
+                        $file_php .= " * @autor Renan Henrique Abreu<renanhabreu@gmail.com> SKT\n";
+                        $file_php .= " */\n";
+                        $file_php .= "class " .$name. "Map extends " .$name. "Table {\n\n\n}";
+                        file_put_contents($this->_dir_app.$map, $file_php);
+                    }
+                    
                     Skt_Core_Prompt::print_("map ". ucfirst(strtolower($name))." criado com sucesso");
                 }else{
                     Skt_Core_Prompt::print_("application not exists", Skt_Core_Prompt::ERROR);

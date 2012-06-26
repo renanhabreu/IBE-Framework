@@ -15,10 +15,8 @@ try{
     // Dispara a requisicao
     Ibe_Request::dispatch();
 
-}catch (Ibe_Exception $e) {
-	$e->alert();
 }catch (Exception $e) {
-	Ibe_Debug::dispatchError(__FILE__, $e->getMessage());
+	Ibe_Debug::error($e->getMessage());
 }
 
 

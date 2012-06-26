@@ -7,6 +7,7 @@ class Configure extends stdClass{
         "_filters",
         "_helpers",
         "_maps",
+        "_maps/tables",
         "_modules",
         "_plugins",
         "_logs",
