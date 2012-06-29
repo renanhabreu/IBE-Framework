@@ -2,5 +2,5 @@
 
 class Configure extends stdClass{
     
-    public $path = "_helpers";
+    public $path = "_extensions";
 }

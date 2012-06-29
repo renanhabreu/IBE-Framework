@@ -1,9 +1,9 @@
 <?php
 
-$_name = "Helper";
-$_description = "cria um novo helper para as aplicacoes";
+$_name = "Plugin";
+$_description = "cria um novo plugin para as aplicacoes";
 $_params = array(
     "app"=>"nome da aplicacao",
-    "hlp"=>"nome do helper"
+    "plg"=>"nome do plugin"
 );
-$_example = "hlp hlp:nome_do_helper";
+$_example = "plg app:nome_da_aplicacao plg:nome_do_helper";

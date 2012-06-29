@@ -1,9 +1,9 @@
 <?php
 
-$_name = "Helper";
-$_description = "cria um novo helper para as aplicacoes";
+$_name = "Extensions";
+$_description = "cria um novo template para extensions";
 $_params = array(
     "app"=>"nome da aplicacao",
-    "hlp"=>"nome do helper"
+    "ext"=>"nome da extencao"
 );
-$_example = "hlp hlp:nome_do_helper";
+$_example = "plg app:nome_da_aplicacao ext:nome_extension";

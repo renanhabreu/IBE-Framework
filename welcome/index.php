@@ -7,7 +7,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-        <title>Teste de layout</title>
+        <title>Skt::Makers IBE</title>
         <meta name="description" content="">
         <meta name="author" content="">
 
@@ -37,7 +37,7 @@
             
             <div class="span-24 last">
 
-                <div id="skt-menu-fixo" class="ui-widget ui-widget-content ui-corner-all">
+                <div id="skt-menu-fixo" class="box ui-widget ui-widget-content ui-corner-all">
                     <div class="ui-widget-header">
                         <h5>Criador de códigos ibe-framework 1.1 (inspired + beautiful + elegant:)</h5>
                     </div>
@@ -53,7 +53,7 @@
             
             <div class="span-14">
                 
-                <div id ="skt-general" class="ui-widget ui-widget-content ui-corner-all">
+                <div id ="skt-general" class="box ui-widget ui-widget-content ui-corner-all">
                     <div class="ui-widget-header">
                         <h5>Maker General Configuration</h5>
                     </div>
@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 
-                <div id="skt-menu-alert" class="ui-widget ui-widget-content ui-corner-all">
+                <div id="skt-menu-alert" class="box ui-widget ui-widget-content ui-corner-all">
                     
                     <div class="ui-widget-header">
                         <h5>Maker Information</h5>
@@ -85,7 +85,7 @@
             
             <div class="span-10 last">
 
-                <div id="skt-menu">
+                <div id="skt-menu" class="box">
                     <?php
                         include_once 'cls/inc_menu.php';
                         Menu::get()->show();

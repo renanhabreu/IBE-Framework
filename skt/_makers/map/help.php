@@ -1,5 +1,6 @@
 <?php
 $_name = "Mapa - ORM";
+$_position = 10;
 $_description = "cria mapas,  localizados em _maps, para o aplicativo";
 $_params = array(
     "app"=>"nome da aplicacao",
