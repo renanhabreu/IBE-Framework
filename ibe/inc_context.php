@@ -34,11 +34,12 @@ class Ibe_Context {
         $url = explode('/', rtrim($_SERVER['REQUEST_URI'], " \t\n\r\0/"));
         $exit = false;
         $index = array_search('index.php', $url);
-
+        $PORT = ':'.$_SERVER['SERVER_PORT'];
+        
         if (($_ = strstr($_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'], 'index.php', true))) {
-            $this->url_base = 'http://' . $_;
+            $this->url_base = 'http://' . $_ .$PORT;
         } else {
-            $this->url_base = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+            $this->url_base = 'http://' . $_SERVER['SERVER_NAME'] .$PORT. $_SERVER['REQUEST_URI'];
         }
 
         if ($index) {
