@@ -3,7 +3,7 @@
 class Map extends Skt_Core_Maker {
 
     public function create(Skt_Core_Request $req) {
-       
+       $this->_directory->create($this->_dir_app.$this->_configure->base);
         $vars = $req->getParamsWithDefaults($this->_configure->database);
         $host = $vars['host'];
         $user = $vars['user'];

@@ -9,6 +9,8 @@ class Configure extends stdClass{
         "schm"=>"teste"
     );
     
+    public $base = 'tables';
+    
     public $type = array(
         "int" => "int",
         "text" => "string",

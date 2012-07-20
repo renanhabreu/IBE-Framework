@@ -1,5 +1,5 @@
 <?php
-
+$_position = 6;
 $_name = "Plugin";
 $_description = "cria um novo plugin para as aplicacoes";
 $_params = array(

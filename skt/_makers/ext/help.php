@@ -1,5 +1,5 @@
 <?php
-
+$_position = 4;
 $_name = "Extensions";
 $_description = "cria um novo template para extensions";
 $_params = array(
