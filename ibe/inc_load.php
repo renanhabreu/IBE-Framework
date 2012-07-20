@@ -30,64 +30,84 @@ final class Ibe_Load{
         return $objAction;
     }
     
+    private static $instance_plugin = array();
     static public function plugin($name){
         $name = strtolower($name);
-        $pluginName = ucfirst($name)."Plugin";
-        $path = "_plugins".DS."inc_".$name.".php";
         
-        if(!file_exists($path)){
-            throw new Ibe_Exception_Load("O plugin ".$name." nao foi encontrado");
-        }else{
-            include_once($path);
+        if(!isset(self::$instance_plugin[$name])){
+            $pluginName = ucfirst($name)."Plugin";
+            $path = "_plugins".DS."inc_".$name.".php";
+
+            if(!file_exists($path)){
+                throw new Ibe_Exception_Load("O plugin ".$name." nao foi encontrado");
+            }else{
+                include_once($path);
+            }
+
+
+            $clsPlugin = new ReflectionClass($pluginName);
+            self::$instance_plugin[$name] = $clsPlugin->newInstance();
         }
         
-        
-       $clsPlugin = new ReflectionClass($pluginName);
-       return $clsPlugin->newInstance();
+        return self::$instance_plugin[$name];
     }
     
+    private static $instance_filter = array();
     static public function filter($name){
         $name = strtolower($name);
-        $filterName = ucfirst($name)."Filter";
-        $path = "_filters".DS."inc_".$name.".php";
         
-        if(!file_exists($path)){
-            throw new Ibe_Exception_Load("O filtro ".$name." nao foi encontrado");
-        }else{
-            include_once($path);
+        if(!isset(self::$instance_filter[$name])){
+            $filterName = ucfirst($name)."Filter";
+            $path = "_filters".DS."inc_".$name.".php";
+
+            if(!file_exists($path)){
+                throw new Ibe_Exception_Load("O filtro ".$name." nao foi encontrado");
+            }else{
+                include_once($path);
+            }
+
+            $clsFilter= new ReflectionClass($filterName);
+            self::$instance_filter[$name] = $clsFilter->newInstance();
         }
         
-       $clsFilter= new ReflectionClass($filterName);
-       return $clsFilter->newInstance();
+        return self::$instance_filter[$name];
     }
     
+    private static $instance_helper = array();
     static public function helper($name){
         $name = strtolower($name);
-        $helperName = ucfirst($name)."Helper";
-        $path = "_helpers".DS."inc_".$name.".php";
-        
-        if(!file_exists($path)){
-            throw new Ibe_Exception_Load("O helper ".$name." nao foi encontrado");
-        }else{
-            include_once($path);
+        if(!isset(self::$instance_helper[$name])){
+            $helperName = ucfirst($name)."Helper";
+            $path = "_helpers".DS."inc_".$name.".php";
+
+            if(!file_exists($path)){
+                throw new Ibe_Exception_Load("O helper ".$name." nao foi encontrado");
+            }else{
+                include_once($path);
+            }
+
+            $clsHelper= new ReflectionClass($helperName);
+            self::$instance_helper[$name] = $clsHelper->newInstance();
         }
         
-       $clsHelper= new ReflectionClass($helperName);
-       return $clsHelper->newInstance();
+        return self::$instance_helper[$name];
     }
     
+    private static $instance_configue = NULL;
     static public function configure(){
         
-        $configureName = "Configure";
-        $path = "_modules".DS."inc_configure.php";
-        
-        if(file_exists($path)){
-           include_once($path);
-           $cls= new ReflectionClass($configureName);
-           return $cls->newInstance();
+        if(!isset(self::$instance_configue)){
+            $configureName = "Configure";
+            $path = "_modules".DS."inc_configure.php";
+
+            if(file_exists($path)){
+                include_once($path);
+                $cls= new ReflectionClass($configureName);
+                self::$instance_configue = $cls->newInstance();
+            }
         }
         
-        return NULL;
+        return self::$instance_configue;
     }
     
     static public function map($name){

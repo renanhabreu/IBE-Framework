@@ -85,4 +85,18 @@ class Ibe_View extends Ibe_Object {
        
     }
 
+    static public function showJson($value){
+        
+        header('Cache-Control: no-cache, must-revalidate');
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        header('Content-type: application/json');
+        
+        if(!is_object($value)){
+            $response = $value;
+            $value = new stdClass();
+            $value->response = $response; 
+        }
+        echo json_encode($value, JSON_FORCE_OBJECT);
+        exit();
+    }
 }

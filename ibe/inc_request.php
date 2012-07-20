@@ -78,12 +78,18 @@ class Ibe_Request {
         $template = $action->execute($request);
         $action->posAction($request);
         
-        $view_app = $action->getViewApplication();
-        $view_mod = $action->getViewModule();
-        $view_ctr = $action->getViewController();
+        $configure = Ibe_Load::configure();
         
-        $view = new Ibe_View($view_app,$view_mod,$view_ctr,$action);
-        $view->show($template);
+        if(!$configure->isActionReturnJson()){
+            $view_app = $action->getViewApplication();
+            $view_mod = $action->getViewModule();
+            $view_ctr = $action->getViewController();
+
+            $view = new Ibe_View($view_app,$view_mod,$view_ctr,$action);
+            $view->show($template);
+        }else{
+            Ibe_View::showJson($template);
+        }
     }
     
     static public function initSession(){
