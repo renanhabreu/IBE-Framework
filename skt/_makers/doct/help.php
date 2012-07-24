@@ -28,6 +28,5 @@ $_description = "cria mapas,  localizados em _maps, para o aplicativo
 ";
 $_params = array(
     "app"=>"nome da aplicacao",
-    "doctrine_database_dns"=>"dns para conexao ao banco",
     "command"=>"comandos doctrine"
 );

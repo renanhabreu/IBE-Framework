@@ -25,7 +25,7 @@ class Doct extends Skt_Core_Maker {
             }
             
             // conectando o doctrine ao banco de dados atraves do dns em configuracao.php
-            require_once $this->_dir_app . '_libraries/Doctrine-1.2.4/Doctrine.php';
+            require_once $this->_dir_app . '_maps/doctrine/Doctrine.php';
             spl_autoload_register(array('Doctrine', 'autoload'));
             if(!Doctrine_Manager::connection($this->_configure->doctrine_database_dns)){
                 throw new Exception('Not possible connect in database');
