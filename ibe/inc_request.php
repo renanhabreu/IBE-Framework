@@ -18,15 +18,13 @@ class Ibe_Request {
      */
     private $params = array();
 
-    
     const IS_BOOLEAN = 'boolean';
     const IS_INTEGER = 'integer';
-    const IS_FLOAT   = 'float';
-    const IS_STRING  = 'string';
-    const IS_ARRAY   = 'array';
-    const IS_OBJECT  = 'object';
-    const IS_NULL    = 'null';
-
+    const IS_FLOAT = 'float';
+    const IS_STRING = 'string';
+    const IS_ARRAY = 'array';
+    const IS_OBJECT = 'object';
+    const IS_NULL = 'null';
 
     private function __construct() {
         $params = array();
@@ -49,62 +47,61 @@ class Ibe_Request {
      * Seta o nome do modulo padrao quando este nao for citado na URL
      * @param type $name
      */
-    static public function setDefaultModule($name){ self::$_module = $name;}
+    static public function setDefaultModule($name) {
+        self::$_module = $name;
+    }
 
     /**
      * Seta o nome do controlador padrao quando este nao for citado na URL
      * @param type $name
      */
-    static public function setDefaultController($name){ self::$_controller = $name;}
+    static public function setDefaultController($name) {
+        self::$_controller = $name;
+    }
 
     /**
      * Seta o nome da ação padrao quando este nao for citado na URL
      * @param type $name
      */
-    static public function setDefaultAction($name){ self::$_action = $name;}
-   
+    static public function setDefaultAction($name) {
+        self::$_action = $name;
+    }
+
     /**
      * Inicia a execucao de uma nova requisicao HTTP ao aplicativo
      * @return Ibe_Request
      */
     static public function dispatch() {
-        
-        $ctx = Ibe_Context::getInstance(self::$_module,self::$_controller,self::$_action);
+
+        $ctx = Ibe_Context::getInstance(self::$_module, self::$_controller, self::$_action);
         $request = new self();
-        
-        $action = Ibe_Load::action();        
+
+        $action = Ibe_Load::action();
         $action->setContext($ctx);
         $action->preAction($request);
         $template = $action->execute($request);
         $action->posAction($request);
         
-        $configure = Ibe_Load::configure();
-        
-        if(!$configure->isActionReturnJson()){
-            $view_app = $action->getViewApplication();
-            $view_mod = $action->getViewModule();
-            $view_ctr = $action->getViewController();
+        $view_app = $action->getViewApplication();
+        $view_mod = $action->getViewModule();
+        $view_ctr = $action->getViewController();
 
-            $view = new Ibe_View($view_app,$view_mod,$view_ctr,$action);
-            $view->show($template);
-        }else{
-            Ibe_View::showJson($template);
-        }
+        $view = new Ibe_View($view_app, $view_mod, $view_ctr, $action);
+        $view->show($template);
     }
-    
-    static public function initSession(){
+
+    static public function initSession() {
         session_start();
-        
-        if(!isset($_SESSION['_IBE'])){
+
+        if (!isset($_SESSION['_IBE'])) {
             $_SESSION['_IBE'] = array();
         }
     }
-    
-    
-    static public function finalizeSession(){
+
+    static public function finalizeSession() {
         session_destroy();
     }
-    
+
     /**
      * Retorna um array com todos os parametros passados como post, get e cookies
      * tratados
@@ -131,7 +128,7 @@ class Ibe_Request {
             $valor = $params[$nome];
         }
 
-        if(!settype($valor, $type)){
+        if (!settype($valor, $type)) {
             $valor = $valor_padrao;
         }
 
@@ -166,7 +163,7 @@ class Ibe_Request {
      * Limpa todos os parametros da requisicao
      * @return Ibe_Request
      */
-    public function clearParams(){
+    public function clearParams() {
         $this->params = array();
         return $this;
     }

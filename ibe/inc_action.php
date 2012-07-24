@@ -15,14 +15,11 @@ abstract class Ibe_Action extends Ibe_Object {
     protected $view_application = NULL;
     protected $view_module = NULL;
     protected $view_controller = NULL;
+    protected $response = NULL;
     
     private $configure = NULL;
     
-    public function __construct() {
-        $this->view_application = new Ibe_Object(); 
-        $this->view_module      = new Ibe_Object();
-        $this->view_controller  = new Ibe_Object();
-        
+    public function __construct() {        
         $this->configure = Ibe_Load::configure();
         
         if(!is_null($this->configure)){
@@ -40,24 +37,31 @@ abstract class Ibe_Action extends Ibe_Object {
             }        
         }
         
-        $helpers = $this->configure->getHelpers();
+        if(!$this->configure->isActionReturnJson()){
+            $this->view_application = new Ibe_Object(); 
+            $this->view_module      = new Ibe_Object();
+            $this->view_controller  = new Ibe_Object();
+
+            $this->view_application->helper = new Ibe_Object();
+            $this->view_module->helper      = new Ibe_Object();
+            $this->view_controller->helper  = new Ibe_Object();
+
+            $this->view_application->modules_params = $this->modules_params;            
+            $this->view_module->modules_params      = $this->modules_params;  
+            $this->view_controller->modules_params  = $this->modules_params;  
+        }else{
+            $this->response = new stdClass();
+        }
         
-        $this->view_application->helper = new Ibe_Object();
-        $this->view_module->helper = new Ibe_Object();
-        $this->view_controller->helper = new Ibe_Object();
         $this->helper = new Ibe_Object();
-        
-        
-        $this->view_application->modules_params = $this->modules_params;            
-        $this->view_module->modules_params = $this->modules_params;  
-        $this->view_controller->modules_params = $this->modules_params;  
-        
+        $helpers = $this->configure->getHelpers();
         foreach($helpers as $helper){
             $hp = Ibe_Helper::get($helper);
-            
-            $this->view_application->helper->__set($helper,$hp);            
-            $this->view_module->helper->__set($helper,$hp);            
-            $this->view_controller->helper->__set($helper,$hp);            
+            if(!$this->configure->isActionReturnJson()){
+                $this->view_application->helper->__set($helper,$hp);            
+                $this->view_module->helper->__set($helper,$hp);            
+                $this->view_controller->helper->__set($helper,$hp);   
+            }
             $this->helper->__set($helper,$hp);
         }
         
@@ -99,6 +103,14 @@ abstract class Ibe_Action extends Ibe_Object {
      */
     public function getViewController(){
         return $this->view_controller;
+    }
+    
+    /**
+     * Retorna um objeto padrao para resposta de JSON
+     * @return stdClass 
+     */
+    public function getResponse(){
+        return $this->response;
     }
     
     /**

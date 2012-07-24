@@ -25,7 +25,7 @@ $(document).ready(function(){
             var el = $(elm);
             var vl = el.val();
             var name = el.attr('name');
-            vl = (vl == "")? " ":escape(vl);
+            vl = (vl == "")? " ":encodeURI(vl);
             action = action+"/"+name+"/"+vl; 
             
             $('input:[name='+name+']').val(vl);
