@@ -19,7 +19,10 @@ abstract class Ibe_Action extends Ibe_Object {
     
     private $configure = NULL;
     
-    public function __construct() {        
+    public function __construct() {          
+        $this->setContext(Ibe_Context::getInstance());
+        $this->filters[] = $this->action;
+        
         $this->configure = Ibe_Load::configure();
         
         if(!is_null($this->configure)){
@@ -55,18 +58,41 @@ abstract class Ibe_Action extends Ibe_Object {
         
         $this->helper = new Ibe_Object();
         $helpers = $this->configure->getHelpers();
-        foreach($helpers as $helper){
-            $hp = Ibe_Helper::get($helper);
-            if(!$this->configure->isActionReturnJson()){
-                $this->view_application->helper->__set($helper,$hp);            
-                $this->view_module->helper->__set($helper,$hp);            
-                $this->view_controller->helper->__set($helper,$hp);   
+        
+        /**
+         * Helpers simples $helpers = array("x","xx","xxxx") 
+         *  sao inclusos em todos os controladores
+         * Helpers limitados Helpers = array("x"=>"controlador1|controlador2") 
+         *  sao inclusos apenas nos controladores indicados 
+         */
+        foreach($helpers as $helper=>$all){
+            $helper_name = $all;
+            if(is_string($helper)){
+                $helper_name = FALSE;
+                $controllers = explode("|",$all);
+                
+                if(array_search($this->controller, $controllers) !== FALSE){
+                    $helper_name = $helper;
+                }
             }
-            $this->helper->__set($helper,$hp);
+            if($helper_name != FALSE){
+                $hp = Ibe_Helper::get($helper_name);
+                if(!$this->configure->isActionReturnJson()){
+                    $this->view_application->helper->__set($helper,$hp);            
+                    $this->view_module->helper->__set($helper,$hp);            
+                    $this->view_controller->helper->__set($helper,$hp);   
+                }
+                $this->helper->__set($helper,$hp);
+            }
         }
+        //**//
         
         foreach($this->filters as $filter){
-            Ibe_Load::filter($filter)->execute();
+            $instance = Ibe_Load::filter($filter);
+            
+            if(isset($instance)){
+                $instance->execute();
+            }
         }
         
     }
