@@ -51,7 +51,7 @@ final class Ibe_Load{
         
         return self::$instance_plugin[$name];
     }
-    
+        
     private static $instance_filter = array();
     static public function filter($name){
         $name = strtolower($name);
@@ -59,19 +59,22 @@ final class Ibe_Load{
         if(!isset(self::$instance_filter[$name])){
             $filterName = ucfirst($name)."Filter";
             $path = "_filters".DS."inc_".$name.".php";
-
+            
             if(!file_exists($path)){
-                throw new Ibe_Exception_Load("O filtro ".$name." nao foi encontrado");
+                if($name != Ibe_Context::getInstance()->getAction()){
+                    throw new Ibe_Exception_Load("O filtro ".$name." nao foi encontrado");
+                }
+                self::$instance_filter[$name] = NULL;
             }else{
                 include_once($path);
+                $clsFilter= new ReflectionClass($filterName);
+                self::$instance_filter[$name] = $clsFilter->newInstance();
             }
-
-            $clsFilter= new ReflectionClass($filterName);
-            self::$instance_filter[$name] = $clsFilter->newInstance();
         }
         
         return self::$instance_filter[$name];
     }
+    
     
     private static $instance_helper = array();
     static public function helper($name){

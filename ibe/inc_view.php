@@ -13,6 +13,7 @@ class Ibe_View extends Ibe_Object {
     const CONTROLLER = 2;
     const MODULE = 3;
     const NONE = 4;
+    const JSON = -999;
     
     private $view_application = NULL;
     private $view_module = NULL;
@@ -95,15 +96,22 @@ class Ibe_View extends Ibe_Object {
             header('Content-type: application/json');
 
             $value = new stdClass();
-            if(!is_object($type_show) && isset($type_show)){
+            if(!is_object($type_show) && isset($type_show) && $type_show != Ibe_View::JSON){
                 $response = $type_show;
                 $value->response = $response; 
             }else{
                 $value->response = $this->view_action->getResponse();
+                if(isset($value->response->error)){
+                    $value->error = (bool)$value->response->error;
+                    $value->messageError = (string)$value->response->messageError;
+                    unset($value->response->error);
+                    unset($value->response->messageError);
+                }
             }
             echo json_encode($value, JSON_FORCE_OBJECT);
             exit();
         }
+       
        
     }
 
