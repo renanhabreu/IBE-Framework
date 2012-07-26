@@ -30,16 +30,19 @@ class Ibe_Context {
 
     private function __construct($module, $controller, $action) {
 
-
         $url = explode('/', rtrim($_SERVER['REQUEST_URI'], " \t\n\r\0/"));
-        $exit = false;
         $index = array_search('index.php', $url);
-        $PORT = ':'.$_SERVER['SERVER_PORT'];
-        
+        $PORT = ':' . $_SERVER['SERVER_PORT'];
+
         if (($_ = strstr($_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'], 'index.php', true))) {
-            $this->url_base = 'http://' . $_ .$PORT;
+            $this->url_base = 'http://' . $_ . $PORT;
         } else {
-            $this->url_base = 'http://' . $_SERVER['SERVER_NAME'] .$PORT. $_SERVER['REQUEST_URI'];
+            $url_ = $_SERVER['SERVER_NAME'] . $PORT . $_SERVER['REQUEST_URI'];
+
+            if (($_ = strstr($url_, '?', true))) {
+                $url_ = $_;
+            }
+            $this->url_base = 'http://' . $url_;
         }
 
         if ($index) {
@@ -113,5 +116,42 @@ class Ibe_Context {
     public function getAction() {
         return $this->action;
     }
+
+    /**
+     * Registra uma variavel na sessao _IBE
+     * @param string $name
+     * @param mixed $value 
+     * @todo validar variavel de sessao
+     */
+    public function setParam($name, $value) {
+        $name = strtoupper($name);
+        $_SESSION['_IBE'][$name] = $value;
+        
+    }
+
+    /**
+     * Retorna um parametro da sessao _IBE, 
+     * @param string $name
+     * @return mixed FALSE em caso de variavel nao registrada 
+     */
+    public function getParam($name) {
+        $name = strtoupper($name);
+        $value = FALSE;
+        
+        if (isset($_SESSION['_IBE'][$name])) {
+            $value = $_SESSION['_IBE'][$name];
+        }
+
+        return $value;
+    }
+
+    /**
+     * Retorna todas as variaveis de contexto
+     * @return mixed
+     */
+    public function getAllParam() {
+        return $_SESSION['_IBE'];
+    }
+
 
 }
