@@ -7,7 +7,6 @@ class Configure extends stdClass{
         "_filters",
         "_helpers",
         "_maps",
-        "_maps/tables",
         "_modules",
         "_plugins",
         "_logs",
@@ -15,7 +14,8 @@ class Configure extends stdClass{
         "_rsc/js",
         "_rsc/img",
         "_rsc/css",
-        "_rsc/upload"
+        "_rsc/upload",
+        "_validators"
     );
     
     public $index = array(

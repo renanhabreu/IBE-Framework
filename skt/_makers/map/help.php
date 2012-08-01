@@ -1,6 +1,6 @@
 <?php
 $_name = "Mapa - IBE ORM";
-$_position = 7;
+$_position = 8;
 $_description = "cria mapas,  localizados em _maps, para o aplicativo";
 $_params = array(
     "app"=>"nome da aplicacao",

@@ -12,8 +12,11 @@ try{
     Ibe_Request::setDefaultModule('@MOD@');
     Ibe_Request::setDefaultController('@CTR@');
     Ibe_Request::setDefaultAction('@ACT@');
-    // Dispara a requisicao
-    Ibe_Request::dispatch();
+    
+    // Dispara a requisicao 
+    // param == TRUE to session_start 
+    // param == FALSE default
+    Ibe_Request::dispatch(FALSE);
 
 }catch (Exception $e) {
 	Ibe_Debug::error($e->getMessage());
