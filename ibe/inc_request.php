@@ -18,6 +18,8 @@ class Ibe_Request {
      */
     private $params = array();
 
+    /* Data Types */
+
     const IS_BOOLEAN = 'boolean';
     const IS_INTEGER = 'integer';
     const IS_FLOAT = 'float';
@@ -25,6 +27,12 @@ class Ibe_Request {
     const IS_ARRAY = 'array';
     const IS_OBJECT = 'object';
     const IS_NULL = 'null';
+    const IS_ANY = "/.*/";
+    const IS_EMAIL = "/^[\w\-\+\&\*]+(?:\.[\w\-\_\+\&\*]+)*@(?:[\w-]+\.)+[a-zA-Z]{2,7}$/";
+    const IS_DATE = "/^(((0[1-9]|[12]\d|3[01])\/(0[13578]|1[02])\/((19|[2-9]\d)\d{2}))|((0[1-9]|[12]\d|30)\/(0[13456789]|1[012])\/((19|[2-9]\d)\d{2}))|((0[1-9]|1\d|2[0-8])\/02\/((19|[2-9]\d)\d{2}))|(29\/02\/((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$/";
+    const IS_NUMBER = "/^.*[0-9]$/";
+    const IS_ALFA = "/^.*[a-zA-Z]$/";
+    const IS_NO_EMPTY = "/^.+$/";
 
     private function __construct() {
         $params = array();
@@ -71,8 +79,12 @@ class Ibe_Request {
      * Inicia a execucao de uma nova requisicao HTTP ao aplicativo
      * @return Ibe_Request
      */
-    static public function dispatch() {
+    static public function dispatch($init_session = FALSE) {
 
+        if($init_session){
+            self::initSession();
+        }
+        
         $ctx = Ibe_Context::getInstance(self::$_module, self::$_controller, self::$_action);
         $request = new self();
 
@@ -81,7 +93,7 @@ class Ibe_Request {
         $action->preAction($request);
         $template = $action->execute($request);
         $action->posAction($request);
-        
+
         $view_app = $action->getViewApplication();
         $view_mod = $action->getViewModule();
         $view_ctr = $action->getViewController();
@@ -90,7 +102,7 @@ class Ibe_Request {
         $view->show($template);
     }
 
-    static public function initSession() {
+    static private function initSession() {
         session_start();
 
         if (!isset($_SESSION['_IBE'])) {
@@ -119,7 +131,7 @@ class Ibe_Request {
      * @param mixed $valor_padrao
      * @return mixed
      */
-    public function getParam($nome, $valor_padrao = null, $type = Ibe_Request::IS_STRING) {
+    public function getParam($nome, $valor_padrao = null, $types = FALSE) {
         $params = $this->params;
         $valor = null;
         if (!isset($params[$nome]) || empty($params[$nome])) {
@@ -128,8 +140,39 @@ class Ibe_Request {
             $valor = $params[$nome];
         }
 
-        if (!settype($valor, $type)) {
-            $valor = $valor_padrao;
+        
+                
+        if($types !== FALSE){
+            
+            if(!is_array($types)){
+                $types = array($types);
+            }
+
+            foreach($types as $type){
+                switch ($type) {
+                    case Ibe_Request::IS_ARRAY:
+                    case Ibe_Request::IS_BOOLEAN:
+                    case Ibe_Request::IS_FLOAT:
+                    case Ibe_Request::IS_INTEGER:
+                    case Ibe_Request::IS_NULL:
+                    case Ibe_Request::IS_OBJECT:
+                    case Ibe_Request::IS_STRING:
+                        if (!settype($valor, $type)) {
+                            $valor = $valor_padrao;
+                        }
+                        break;
+                    default:
+                        $ibe_validator = Ibe_Load::validator($type);
+                        if ($ibe_validator === FALSE) {
+                            if (!preg_match($type, $valor)) {
+                                throw new Ibe_Exception('Valor de '.$nome.' [' . $valor . '] invalido');
+                            }
+                        } else if (!$ibe_validator->isValid($valor)) {
+                            throw new Ibe_Exception($ibe_validator->getMessage());
+                        }
+                        break;
+                }
+            }
         }
 
         return $valor;

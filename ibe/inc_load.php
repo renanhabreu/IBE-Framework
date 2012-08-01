@@ -76,6 +76,26 @@ final class Ibe_Load{
     }
     
     
+    private static $instance_validator = array();
+    static public function validator($name){
+        $name = strtolower($name);
+        if(!isset(self::$instance_validator[$name])){
+            $helperName = ucfirst($name)."Validator";
+            $path = "_validators".DS."inc_".$name.".php";
+
+            if(!file_exists($path)){
+                return FALSE;
+            }else{
+                include_once($path);
+            }
+
+            $clsHelper= new ReflectionClass($helperName);
+            self::$instance_validator[$name] = $clsHelper->newInstance();
+        }
+        
+        return self::$instance_validator[$name];
+    }   
+    
     private static $instance_helper = array();
     static public function helper($name){
         $name = strtolower($name);
