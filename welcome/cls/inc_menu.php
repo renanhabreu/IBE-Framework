@@ -32,6 +32,11 @@ class Menu{
         
         foreach($makers as $maker){
             if($maker != "." && $maker != ".."){
+            	$_name = null;
+            	$_description = null;
+            	$_example = null;
+            	$_params = null;
+            	$_position = null;
                 $help_file = $makers_path.$maker."/help.php";
                 
                 if(file_exists($help_file)){

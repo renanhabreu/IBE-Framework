@@ -22,7 +22,7 @@ class Map extends Skt_Core_Maker {
             $result = mysql_query($show_tables);
 
             if ($result) {
-                while ($row = mysql_fetch_array($result)) {
+                while (@$row = mysql_fetch_array($result)) {
 
                     //Tabelas
                     $table[$row[0]] = array();
