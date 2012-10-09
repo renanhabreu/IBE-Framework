@@ -7,7 +7,7 @@
  * @package ibe
  */
 class Ibe_Request {
-
+	static private $_is_https = FALSE;
     static private $_module = 'public';
     static private $_controller = 'public';
     static private $_action = 'public';
@@ -53,28 +53,41 @@ class Ibe_Request {
 
     /**
      * Seta o nome do modulo padrao quando este nao for citado na URL
-     * @param type $name
+     * @param string $name
      */
     static public function setDefaultModule($name) {
         self::$_module = $name;
+        return self;
     }
 
     /**
      * Seta o nome do controlador padrao quando este nao for citado na URL
-     * @param type $name
+     * @param string $name
      */
     static public function setDefaultController($name) {
         self::$_controller = $name;
+        return self;
     }
 
     /**
      * Seta o nome da ação padrao quando este nao for citado na URL
-     * @param type $name
+     * @param string $name
      */
     static public function setDefaultAction($name) {
         self::$_action = $name;
+        return self;
     }
-
+	
+    /**
+     * Seta a descricao para o framework se as requisições serão HTTPS
+     * @param boolean $is
+     * @return string
+     */
+    static public function setIsHttps($is = TRUE){
+    	self::$_is_https = $is;	
+        return self;
+    }
+    
     /**
      * Inicia a execucao de uma nova requisicao HTTP ao aplicativo
      * @return Ibe_Request
@@ -85,7 +98,7 @@ class Ibe_Request {
             self::initSession();
         }
         
-        $ctx = Ibe_Context::getInstance(self::$_module, self::$_controller, self::$_action);
+        $ctx = Ibe_Context::getInstance(self::$_module, self::$_controller, self::$_action,self::$_is_https);
         $request = new self();
 
         $action = Ibe_Load::action();

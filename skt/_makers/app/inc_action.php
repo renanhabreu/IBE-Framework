@@ -4,7 +4,7 @@
 class App extends Skt_Core_Maker{
 
     public function create(Skt_Core_Request $req){
-        
+    	$req->getParam('repository_app', 'ibe-apps');
         $this->_directory->create($this->_dir_app);
         
         foreach($this->_configure->paths as $path){

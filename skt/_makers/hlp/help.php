@@ -1,5 +1,5 @@
 <?php
-$_position = 5;
+$_position = 6;
 $_name = "Helper";
 $_description = "cria um novo helper para as aplicacoes";
 $_params = array(

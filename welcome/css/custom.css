@@ -2,9 +2,9 @@
    Author:
    ========================================================================== */
 #skt-menu,#skt-general, #skt-menu-alert{ margin-top:20px;}
-#skt-menu-alert { height:300px; }
+#skt-menu-alert { /*height:300px;*/ }
 #skt-general { height:280px; }
-#skt-menu{ height:600px;}
+#skt-menu{/* height:900px;*/}
 #skt-general h5,
 #skt-menu-alert h5, 
 #skt-menu-alert-content h5,#skt-menu-fixo h5{ margin:0; padding:5px;}

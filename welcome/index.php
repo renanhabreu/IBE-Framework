@@ -53,19 +53,14 @@
             
             <div class="span-14">
                 
-                <div id ="skt-general" class="box ui-widget ui-widget-content ui-corner-all">
+                <!-- div id ="skt-general" class="box ui-widget ui-widget-content ui-corner-all">
                     <div class="ui-widget-header">
                         <h5>Maker General Configuration</h5>
                     </div>
                     <div id ="skt-general-configuration">
-                        <form>
-                            <label>
-                                Repository Applications<br/>
-                                <input type="text" name="repository-app"/>
-                            </label>
-                        </form>
+                       
                     </div>
-                </div>
+                </div -->
                 
                 <div id="skt-menu-alert" class="box ui-widget ui-widget-content ui-corner-all">
                     

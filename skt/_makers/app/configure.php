@@ -19,7 +19,7 @@ class Configure extends stdClass{
     );
     
     public $index = array(
-        "dir_frm"=>"../../framework",
+        "dir_frm"=>"../../WebEstruturada",
         "mod"=>"index",
         "ctr"=>"index",
         "act"=>"index"

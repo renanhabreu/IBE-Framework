@@ -12,6 +12,7 @@ class Ibe_Context {
     private $module = NULL;
     private $controller = NULL;
     private $action = NULL;
+    private $is_https = FALSE;
 
     /**
      * Retorna a instancia do contexto da aplicacao
@@ -20,7 +21,7 @@ class Ibe_Context {
      * @param type $action
      * @return Ibe_Context
      */
-    static public function getInstance($module = NULL, $controller = NULL, $action = NULL) {
+    static public function getInstance($module = NULL, $controller = NULL, $action = NULL, $is_https = FALSE) {
         if (is_null(self::$instance)) {
             self::$instance = new self($module, $controller, $action);
         }
@@ -33,16 +34,17 @@ class Ibe_Context {
         $url = explode('/', rtrim($_SERVER['REQUEST_URI'], " \t\n\r\0/"));
         $index = array_search('index.php', $url);
         $PORT = ':' . $_SERVER['SERVER_PORT'];
-
+		$https = ($this->is_https)? 'https://':'http://';
+		
         if (($_ = strstr($_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'], 'index.php', true))) {
-            $this->url_base = 'http://' . $_ . $PORT;
+            $this->url_base = $https . $_ . $PORT;
         } else {
             $url_ = $_SERVER['SERVER_NAME'] . $PORT . $_SERVER['REQUEST_URI'];
 
             if (($_ = strstr($url_, '?', true))) {
                 $url_ = $_;
             }
-            $this->url_base = 'http://' . $url_;
+            $this->url_base = $https . $url_;
         }
 
         if ($index) {

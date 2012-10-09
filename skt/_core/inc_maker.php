@@ -26,7 +26,19 @@ abstract class Skt_Core_Maker{
     
     private function dispatch(Skt_Core_Request $req){        
         $this->_configure = $this->_file->include_configure(strtolower($req->getMaker()));
+        /*
+        $repository_app = $req->getParam('repository_app', 'ibe-apps');
         
+        if($repository_app){
+        	if (!defined('APP_DIR')) {
+        		if (!is_dir($repository_app)) {
+        			mkdir($repository_app, 777, true);
+        		}
+        
+        		define('APP_DIR', $repository_app . DS);
+        	}
+        }
+        */
         
         $this->_app = $req->getParam("app","application");         
         $this->_mod = $req->getParam("mod","module");        
@@ -44,18 +56,6 @@ abstract class Skt_Core_Maker{
         
     static public function run($argv){
         $req = new Skt_Core_Request($argv);
-        $repository_app = "../../".$req->getParam('repository_app', 'ibe-apps');
-        
-        if($repository_app){
-            if (!defined('APP_DIR')) {
-                if (!is_dir($repository_app)) {
-                        mkdir($repository_app, 777, true);
-                }
-
-               define('APP_DIR', $repository_app . DS);
-            }
-        }
-        
         
         if($req->getMaker()){
             $mk_class = implode("_",array_map("ucfirst",explode("_",strtolower($req->getMaker()))));

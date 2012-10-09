@@ -39,7 +39,8 @@ class Ibe_View extends Ibe_Object {
      */
     public function show($type_show) {
         
-        $configure = Ibe_Load::configure();        
+        $configure = Ibe_Load::configure();    
+            
         if(!$configure->isActionReturnJson()){
             $app_path = "_modules".DS."inc_views.php";
             $mod_path = "_modules"
@@ -84,7 +85,12 @@ class Ibe_View extends Ibe_Object {
                     break;
 
                 default:
-                    $cts = "";
+                	$act_path = "_modules"
+                	          .DS.$this->context->getModule()
+                			  .DS.$this->context->getController()
+                			  .DS."_views"
+                			  .DS."inc_".rtrim(str_replace(' ','_', strtolower($type_show))).".php";
+                    $cts = $this->view_action->__include($act_path);
                     break;
             }
 
