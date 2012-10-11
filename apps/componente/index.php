@@ -9,9 +9,9 @@ try{
     Ibe_Debug::enable();
     
     //Configura requisicao padrao
-    Ibe_Request::setDefaultModule('@MOD@');
-    Ibe_Request::setDefaultController('@CTR@');
-    Ibe_Request::setDefaultAction('@ACT@');
+    Ibe_Request::setDefaultModule('index');
+    Ibe_Request::setDefaultController('index');
+    Ibe_Request::setDefaultAction('index');
     
     // Dispara a requisicao 
     // param == TRUE to session_start 

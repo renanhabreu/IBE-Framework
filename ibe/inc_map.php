@@ -511,7 +511,7 @@ abstract class Ibe_Map {
         $items = array();
 
         $resultado = $query->execute(false);
-        while (($row = mysql_fetch_array($resultado))) {
+        while ((@$row = mysql_fetch_array($resultado))) {
 
             $class = get_class($this);
             $cl = new ReflectionClass($class);

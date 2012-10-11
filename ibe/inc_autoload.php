@@ -1,5 +1,4 @@
 <?php
-
 // DIRECTORY_SEPARATOR alias
 define("DS", DIRECTORY_SEPARATOR);
 define("IBE_FRAMEWORK_PATH", __DIR__ . DS);

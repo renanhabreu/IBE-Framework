@@ -25,5 +25,8 @@ class Configure extends stdClass{
         "act"=>"index"
     );
     
+    
+    
 }
+
 

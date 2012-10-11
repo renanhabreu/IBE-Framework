@@ -41,7 +41,7 @@ class Ibe_View extends Ibe_Object {
         
         $configure = Ibe_Load::configure();    
             
-        if(!$configure->isActionReturnJson()){
+        if(!$configure->isActionReturnJson() && $type_show != Ibe_View::JSON){
             $app_path = "_modules".DS."inc_views.php";
             $mod_path = "_modules"
                         .DS.$this->context->getModule()
