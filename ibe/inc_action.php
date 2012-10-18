@@ -163,7 +163,7 @@ abstract class Ibe_Action extends Ibe_Object {
      * @param Ibe_Request $req
      */
     public function preAction(Ibe_Request $req) {
-
+		$this->__setVars($req->getAllParams());
     }
 
     /**

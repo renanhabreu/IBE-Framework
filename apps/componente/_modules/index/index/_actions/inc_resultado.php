@@ -4,9 +4,7 @@
  */
 class ResultadoAction extends Ibe_Action{
 
-    public function execute(Ibe_Request $req){   
-    	$this->response->msg = "teste de mensagem";
-    	
+    public function execute(Ibe_Request $req){     	
         return Ibe_View::JSON;
     }
 }

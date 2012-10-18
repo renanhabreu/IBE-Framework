@@ -123,7 +123,7 @@
 
 	        $.ibeAction = {
 				myComplete:function(){ console.log("completou");},
-				mySuccess:function(){ console.log("terminou");},
+				mySuccess:function(resp){ alert(resp.response.msg); },
 				myBefore:function(){ console.log("antes");}
 	    	};
 	    	
@@ -138,19 +138,10 @@
         	<input type="text" name="nome" value="Renan" />
             <?php echo $this->view_module; ?>
             
+            <?php Ext_Component::init($this);?>
+            <?php $this->cA->fix();?>
             
-            
-             <a 
-             	ibe-comp="true" 
-             	ibe-complete="myComplete" 
-             	ibe-before="myBefore" 
-             	ibe-success="mySuccess" 
-             	ibe-event="click" 
-             	ibe-action="/componente/index.php/index/index/resultado"
-             	ibe-context="body" 
-             >
-             teste
-             </a>
+           
         </div>
     </body>
 </html>

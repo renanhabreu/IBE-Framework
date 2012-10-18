@@ -12,6 +12,10 @@ class Configure extends Ibe_Configure {
 #    protected $database_user = "";
 #    protected $database_pass = "";
 #    protected $database_schm = "";
-
-
+	 
+	 public function getComponentList(){
+	 	return array(
+	 		"a"		
+	 	);
+	 }
 }
