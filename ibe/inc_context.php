@@ -3,7 +3,7 @@
  * Contexto eh o ambiente que possui todo o mundo do aplicativo. Eh responsavel
  * por retorna a url_base da aplicacao, controlador, modulo e a aplicacao. 
  * Elem disso, eh responsavel por capturar todos os dados via GET e POST e 
- * configura-los para para o objeto Ibe_Request
+ * configura-los para para o objeto Ibe_Request 
  */
 class Ibe_Context {
 

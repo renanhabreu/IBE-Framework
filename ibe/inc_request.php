@@ -90,7 +90,7 @@ class Ibe_Request {
 
 	/**
 	 * Inicia a execucao de uma nova requisicao HTTP ao aplicativo
-	 * @return Ibe_Request
+	 * @return Ibe_Request 
 	 */
 	static public function dispatch($init_session = FALSE) {
 
