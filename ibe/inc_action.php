@@ -2,7 +2,7 @@
 
 /**
  * Controlador de acoes
- * @author Renan Abreu
+ * @author Renan Abreu <renanhabreu@gmail.com>
  * @package ibe
  */
 abstract class Ibe_Action extends Ibe_Object {
@@ -182,7 +182,7 @@ abstract class Ibe_Action extends Ibe_Object {
      * Metodo que implementa a acao logica do aplicativo
      * Este metodo serah executado quando o usuario
      * realizar uma requisicao via URL ao aplicativo.
-     * ï¿½ identificado como o terceiro parametro da URL ou o valor padrao
+     * é identificado como o terceiro parametro da URL ou o valor padrao
      *
      * http://localhost/index.php/module/controller/action
      *

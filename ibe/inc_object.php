@@ -1,10 +1,9 @@
 <?php
 /**
- * Classe pai que inplementa os metodos mágigos set e gets
- * Importa  e exporta as variáveis
+ * Classe pai que inplementa os metodos magigos set e gets
+ * Importa  e exporta as variaveis
  *
- * @author Renan Abreu
- * @version 20102011
+ * @author Renan Abreu <renanhabreu@gmail.com>
  * @package ibe
  *
  */
@@ -42,7 +41,12 @@ class Ibe_Object{
     
     public function __include($filename){
         if(!file_exists($filename)){
-            throw new Ibe_Exception("Arquivo de objeto nao encontrado. [".$filename." ]");
+        	$core = IBE_FRAMEWORK_PATH . 'default'. DS . $filename;
+        	if(!file_exists($core)){
+            	throw new Ibe_Exception("Arquivo de objeto nao encontrado. [".$filename." ]");
+        	}else{
+        		$filename = $core;
+        	}
         }
         
         ob_start();

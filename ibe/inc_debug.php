@@ -2,7 +2,7 @@
 /**
  * Classe para ajuda no debug da aplicacao
  * 
- * @author Renan Abreu
+ * @author Renan Abreu <renanhabreu@gmail.com>
  * @package ibe
  */
 abstract class Ibe_Debug {
@@ -69,7 +69,7 @@ abstract class Ibe_Debug {
     }
 
     /**
-     * Inicia a contagem de tempo onde $name é o identificador para inicio da contagem
+     * Inicia a contagem de tempo onde $name eh o identificador para inicio da contagem
      * 
      * @param string $name
      */
@@ -78,7 +78,7 @@ abstract class Ibe_Debug {
     }
 
     /**
-     * Finaliza a contagem de tempo onde $name é o identificador para inicio da contagem
+     * Finaliza a contagem de tempo onde $name eh o identificador para inicio da contagem
      * Caso $log_file seja true um arquivo de log chamado $name_time.log sera criado.
      *
      * @param string $name

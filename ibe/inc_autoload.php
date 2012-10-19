@@ -5,8 +5,7 @@ define("IBE_FRAMEWORK_PATH", __DIR__ . DS);
 
 /**
  * Classe de includes automatico da classes do aplicativo.
- * @author Renan Abreu
- * @version 20102011
+ * @author Renan Abreu <renanhabreu@gmail.com>
  * @package ibe
  */
 abstract class Ibe_Autoload {

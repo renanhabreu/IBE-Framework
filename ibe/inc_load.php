@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Realiza o load dos componentes de nucleo 
+ * do framework. Deve ser modificado apenas quando 
+ * uma nova funcionalidade do nucleo for criada
+ * @author Renan Abreu <renanhabreu@gmail.com>
+ * @package ibe
+ */
 final class Ibe_Load{
     
     static public function action(){
@@ -11,7 +17,13 @@ final class Ibe_Load{
                                 .DS.'inc_'.$context->getAction().'.php';
         //Ibe_Debug::dispatchAlert(__FILE__,$actionPath);
         if(!file_exists($actionPath)){
-            throw new Ibe_Exception_Load("Acao requisitada nao existe");
+        	$core_action = IBE_FRAMEWORK_PATH . 'default'. DS . $actionPath;
+        	//Ibe_Debug::error($core_action);
+        	if(!file_exists($core_action)){
+            	throw new Ibe_Exception_Load("Acao requisitada nao existe");
+        	}else{
+        		include_once($core_action);
+        	}
         }else{
             include_once($actionPath);
         }

@@ -4,6 +4,8 @@
  * por retorna a url_base da aplicacao, controlador, modulo e a aplicacao. 
  * Elem disso, eh responsavel por capturar todos os dados via GET e POST e 
  * configura-los para para o objeto Ibe_Request 
+ * @author Renan Abreu <renanhabreu@gmail.com>
+ * @package ibe
  */
 class Ibe_Context {
 

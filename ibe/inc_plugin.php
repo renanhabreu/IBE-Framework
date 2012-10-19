@@ -2,8 +2,7 @@
 
 /**
  * Interface para plugins
- * @author Renan Abreu
- * @version 20102011
+ * @author Renan Abreu <renanhabreu@gmail.com>
  * @package ibe
  */
 abstract class Ibe_Plugin extends Ibe_Object {

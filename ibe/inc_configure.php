@@ -1,9 +1,23 @@
 <?php
 
-
+/**
+ * Arquivo de configuracao de modulo
+ * 
+ * @author Renan Abreu <renanhabreu@gmail.com>
+ * @package ibe
+ */
 class Ibe_Configure{
-
+	
+	/**
+	 * Lista de filtros executados antes de todas
+	 * as acoes
+	 * @var array
+	 */
     protected $filters = array();
+    /**
+     * Lista de helpers instanciados para todas acoes
+     * @var array
+     */
     protected $helpers = array();
     protected $modules_params = array();
     protected $database_active = FALSE;

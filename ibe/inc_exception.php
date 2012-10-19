@@ -2,10 +2,8 @@
 
 /**
  * Classe de excecoes
- * @author Renan Abreu
- * @version 20102011
+ * @author Renan Abreu <renanhabreu@gmail.com>
  * @package ibe
- * @final
  */
 class Ibe_Exception extends Exception {
     /**

@@ -2,8 +2,7 @@
 
 /**
  * Classe de tratamento das requisicoes
- * @author Renan Abreu
- * @version 20102011
+ * @author Renan Abreu <renanhabreu@gmail.com>
  * @package ibe
  */
 class Ibe_Request {
@@ -146,7 +145,7 @@ class Ibe_Request {
 
 	/**
 	 * Retorna o valor de um parametro passado como post,get ou cookie,
-	 * caso o parametro não exista sera devolvido um valor_padrao
+	 * caso o parametro nao exista sera devolvido um valor_padrao
 	 * @param string $nome
 	 * @param mixed $valor_padrao
 	 * @return mixed
@@ -205,7 +204,7 @@ class Ibe_Request {
 	}
 
 	/**
-	 * Compara se o valor de um parametro passado como post,get,cookie é igual ao
+	 * Compara se o valor de um parametro passado como post,get,cookie eh igual ao
 	 * passado como parametro $valor
 	 *
 	 * @param string $nome

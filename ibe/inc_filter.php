@@ -1,10 +1,12 @@
 <?php
 
 /**
- * São sempre disparados antes da execução de uma action, realizam sua tarefa 
- * e em seguida são finalizados. Um classe de filtro precisa apenas de estar 
+ * Saoo sempre disparados antes da execucao de uma action, realizam sua tarefa 
+ * e em seguida sao finalizados. Um classe de filtro precisa apenas de estar 
  * localida no pacote _filtres, extender a class Ibe_Filter e implementar o 
- * método execute 
+ * metodo execute 
+ * @author Renan Abreu <renanhabreu@gmail.com>
+ * @package ibe
  */
 interface Ibe_Filter {
 

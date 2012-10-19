@@ -1,12 +1,12 @@
 <?php
 /**
- * Funcionalidades passíveis de serem utilizados na camada de visão, 
- * estas porporcionam facilidades em tarefas repetitivas e que não 
- * demandam grandes lógicas. Uma class helper precisa estar no 
+ * Funcionalidades passiveis de serem utilizados na camada de visao, 
+ * estas porporcionam facilidades em tarefas repetitivas e que nao 
+ * demandam grandes logicas. Uma class helper precisa estar no 
  * pacote _helpers, extender a class Ibe_Helper e implementar 
- * o método execute
+ * o metodo execute
  * 
- * @author Renan Abreu
+ * @author Renan Abreu <renanhabreu@gmail.com>
  * @package ibe
  */
 abstract class Ibe_Helper extends Ibe_Object {

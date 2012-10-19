@@ -2,8 +2,7 @@
 
 /**
  * Classe de manipulacao de banco de dados
- * @author Renan Abreu
- * @version 20102011
+ * @author Renan Abreu <renanhabreu@gmail.com>
  * @package ibe
  */
 abstract class Ibe_Database {

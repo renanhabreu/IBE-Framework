@@ -1,10 +1,8 @@
 <?php
 /**
  * Layout de tela
- * @author Renan Abreu
- * @version 20102011
+ * @author Renan Abreu <renanhabreu@gmail.com>
  * @package ibe
- * @subpackage layout
  */
 class Ibe_View extends Ibe_Object {
     

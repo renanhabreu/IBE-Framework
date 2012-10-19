@@ -1,12 +1,11 @@
 <?php
 
 /**
- * O pacote mapa é o único pacote que o framework da o suporte nativamente. 
- * Ele é a parte ORM das aplicações, porém, o desenvolvedor não precisa se 
+ * O pacote eh a parte ORM das aplicacoes, porem, o desenvolvedor nao precisa se 
  * limitar a tal pacote. As classes aqui encontradas podem são criadas 
- * automaticamente pelo Fabricante de códigos map
+ * automaticamente pelo Fabricante de codigos map
  * 
- * @author Renan Abreu
+ * @author Renan Abreu <renanhabreu@gmail.com>
  * @package ibe
  */
 abstract class Ibe_Map {
