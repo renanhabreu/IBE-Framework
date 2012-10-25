@@ -19,82 +19,15 @@ abstract class Ibe_Action extends Ibe_Object {
     
     private $configure = NULL;
     
-    public function __construct() {          
-        $this->setContext(Ibe_Context::getInstance());
-        $this->filters[] = $this->action;
-        
-        $this->configure = Ibe_Load::configure();
-        
-        if(!is_null($this->configure)){
-            $this->modules_params = $this->configure->getModulesParams();
-            $this->filters = array_merge($this->configure->getFilters(),$this->filters);
-            
-            
-            if($this->configure->isDataBaseActive()){
-                $host   = $this->configure->getDataBaseHost();
-                $user   = $this->configure->getDataBaseUser();
-                $pass   = $this->configure->getDataBasePass();
-                $schema = $this->configure->getDataBaseSchm();
-                
-                Ibe_Database::open($host,$user,$pass,$schema);
-            }        
-        }
-        
-        if(!$this->configure->isActionReturnJson()){
-            $this->view_application = new Ibe_Object(); 
-            $this->view_module      = new Ibe_Object();
-            $this->view_controller  = new Ibe_Object();
+    public function __construct() {        
+		$this->setContext(Ibe_Context::getInstance());
+		$this->filters[] = $this->action;
 
-            $this->view_application->helper = new Ibe_Object();
-            $this->view_module->helper      = new Ibe_Object();
-            $this->view_controller->helper  = new Ibe_Object();
-
-            $this->view_application->modules_params = $this->modules_params;            
-            $this->view_module->modules_params      = $this->modules_params;  
-            $this->view_controller->modules_params  = $this->modules_params;  
-        }else{
-            $this->response = new stdClass();
-        }
-        
-        $this->helper = new Ibe_Object();
-        $helpers = $this->configure->getHelpers();
-        
-        /**
-         * Helpers simples $helpers = array("x","xx","xxxx") 
-         *  sao inclusos em todos os controladores
-         * Helpers limitados Helpers = array("x"=>"controlador1|controlador2") 
-         *  sao inclusos apenas nos controladores indicados 
-         */
-        foreach($helpers as $helper=>$all){
-            $helper_name = $all;
-            if(is_string($helper)){
-                $helper_name = FALSE;
-                $controllers = explode("|",$all);
-                
-                if(array_search($this->controller, $controllers) !== FALSE){
-                    $helper_name = $helper;
-                }
-            }
-            if($helper_name != FALSE){
-                $hp = Ibe_Helper::get($helper_name);
-                if(!$this->configure->isActionReturnJson()){
-                    $this->view_application->helper->__set($helper,$hp);            
-                    $this->view_module->helper->__set($helper,$hp);            
-                    $this->view_controller->helper->__set($helper,$hp);   
-                }
-                $this->helper->__set($helper,$hp);
-            }
-        }
-        //**//
-        
-        foreach($this->filters as $filter){
-            $instance = Ibe_Load::filter($filter);
-            
-            if(isset($instance)){
-                $instance->execute();
-            }
-        }
-        
+		$this->loadConfigure();
+		$this->executeFilters();
+		$this->configureDatabase();
+		$this->configureResponse();
+		$this->configureHelpers();
     }
     
     /**
@@ -189,6 +122,107 @@ abstract class Ibe_Action extends Ibe_Object {
      * @return int
      */
     abstract public function execute(Ibe_request $req);
+    
+	/**
+	 * Realiza a leitura do arquivo de configuracao
+	 */
+    private function loadConfigure() {
+    	/* Realiza a leitura do arquivo de configuracao */
+    	$this->configure = Ibe_Load::configure();
+    	if (!isset($this->configure)) {
+    		$this->modules_params = $this->configure->getModulesParams();
+    		$this->filters = array_merge($this->configure->getFilters(),
+    				$this->filters);
+    	}
+    }
+    
+    private function configureDatabase() {
+    
+    	if ($this->configure->isDataBaseActive()) {
+    		$host = $this->configure->getDataBaseHost();
+    		$user = $this->configure->getDataBaseUser();
+    		$pass = $this->configure->getDataBasePass();
+    		$schema = $this->configure->getDataBaseSchm();
+    
+    		Ibe_Database::open($host, $user, $pass, $schema);
+    	}
+    }
+    
+    /**
+     * Configura as views caso a resposta nao seja json
+     * no arquivo de configuracao. Caso seja jSON eh
+     * apenas instanciado uma classe padrao para objetos
+     *
+     */
+    private function configureResponse() {
+    
+    	if (!$this->configure->isActionReturnJson()) {
+    		$this->view_application = new Ibe_Object();
+    		$this->view_module = new Ibe_Object();
+    		$this->view_controller = new Ibe_Object();
+    
+    		$this->view_application->helper = new Ibe_Object();
+    		$this->view_module->helper = new Ibe_Object();
+    		$this->view_controller->helper = new Ibe_Object();
+    
+    		$this->view_application->modules_params = $this->modules_params;
+    		$this->view_module->modules_params = $this->modules_params;
+    		$this->view_controller->modules_params = $this->modules_params;
+    	} else {
+    		$this->response = new Ibe_Object();
+    	}
+    }
+    
+    /**
+     * Configura os helpers registrados no arquivo de configuracao
+     * do modulo
+     */
+    private function configureHelpers() {
+    
+    	$this->helper = new Ibe_Object();
+    	$helpers = $this->configure->getHelpers();
+    
+    	/**
+    	 * Helpers simples $helpers = array("x","xx","xxxx")
+    	 *  sao inclusos em todos os controladores
+    	 * Helpers limitados Helpers = array("x"=>"controlador1|controlador2")
+    	 *  sao inclusos apenas nos controladores indicados
+    	*/
+    	foreach ($helpers as $helper => $all) {
+    		$helper_name = $all;
+    		if (is_string($helper)) {
+    			$helper_name = FALSE;
+    			$controllers = explode("|", $all);
+    
+    			if (array_search($this->controller, $controllers) !== FALSE) {
+    				$helper_name = $helper;
+    			}
+    		}
+    		if ($helper_name != FALSE) {
+    			$hp = Ibe_Helper::get($helper_name);
+    			if (!$this->configure->isActionReturnJson()) {
+    				$this->view_application->helper->__set($helper, $hp);
+    				$this->view_module->helper->__set($helper, $hp);
+    				$this->view_controller->helper->__set($helper, $hp);
+    			}
+    			$this->helper->__set($helper, $hp);
+    		}
+    	}
+    }
+    
+    /**
+     * Executa os filtros registrados no arquivo de configuracao
+     * e o filtro com o nome da classe action por padrao
+     */
+    private function executeFilters() {
+    	foreach ($this->filters as $filter) {
+    		$instance = Ibe_Load::filter($filter);
+    
+    		if (isset($instance)) {
+    			$instance->execute();
+    		}
+    	}
+    }
     
     
 }
