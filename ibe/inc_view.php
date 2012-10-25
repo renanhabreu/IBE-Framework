@@ -94,26 +94,20 @@ class Ibe_View extends Ibe_Object {
 
             echo $cts;
         }else{
-            
-            header('Cache-Control: no-cache, must-revalidate');
-            header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-            header('Content-type: application/json');
 
-            $value = new stdClass();
-            if(!is_object($type_show) && isset($type_show) && $type_show != Ibe_View::JSON){
-                $response = $type_show;
-                $value->response = $response; 
-            }else{
-                $value->response = $this->view_action->getResponse();
-                if(isset($value->response->error)){
-                    $value->error = (bool)$value->response->error;
-                    $value->messageError = (string)$value->response->messageError;
-                    unset($value->response->error);
-                    unset($value->response->messageError);
-                }
-            }
-            echo json_encode($value, JSON_FORCE_OBJECT);
-            exit();
+
+        	header('Cache-Control: no-cache, must-revalidate');
+        	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+        	header('Content-type: application/json');
+        	
+        	$value = new Ibe_Object();
+        	if(!is_object($type_show) && isset($type_show) && $type_show != Ibe_View::JSON){
+        		$value->response = $type_show;
+        	}else{
+        		$value = $this->view_action->getResponse();
+        	}
+        	echo $value->toJson();
+        	exit();
         }
        
        
