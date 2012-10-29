@@ -42,7 +42,7 @@ abstract class Ibe_Action extends Ibe_Object {
     
     /**
      * Retorna a view da aplicacao
-     * @return Ibe_View 
+     * @return Ibe_Template 
      */
     public function getViewApplication(){
         return $this->view_application;
@@ -50,7 +50,7 @@ abstract class Ibe_Action extends Ibe_Object {
     
     /**
      * Retorna a view do modulo
-     * @return Ibe_View 
+     * @return Ibe_Template 
      */
     public function getViewModule(){
         return $this->view_module;
@@ -58,10 +58,18 @@ abstract class Ibe_Action extends Ibe_Object {
     
     /**
      * Retorna a view do controller
-     * @return Ibe_View 
+     * @return Ibe_Template
      */
     public function getViewController(){
         return $this->view_controller;
+    }
+
+    /**
+     * Retorna o template da acao
+     * @return Ibe_Template
+     */
+    public function getViewAction(){
+    	return $this->view_action;
     }
     
     /**
@@ -157,17 +165,20 @@ abstract class Ibe_Action extends Ibe_Object {
     private function configureResponse() {
     
     	if (!$this->configure->isActionReturnJson()) {
-    		$this->view_application = new Ibe_Object();
-    		$this->view_module = new Ibe_Object();
-    		$this->view_controller = new Ibe_Object();
-    
-    		$this->view_application->helper = new Ibe_Object();
-    		$this->view_module->helper = new Ibe_Object();
-    		$this->view_controller->helper = new Ibe_Object();
-    
-    		$this->view_application->modules_params = $this->modules_params;
-    		$this->view_module->modules_params = $this->modules_params;
-    		$this->view_controller->modules_params = $this->modules_params;
+			$this->view_application = new Ibe_Template(Ibe_View::APPLICATION);
+			$this->view_module = new Ibe_Template(Ibe_View::MODULE);
+			$this->view_controller = new Ibe_Template(Ibe_View::CONTROLLER);
+			$this->view_action = new Ibe_Template(Ibe_View::ACTION);
+
+			$this->view_application->helper = new Ibe_Object();
+			$this->view_module->helper = new Ibe_Object();
+			$this->view_controller->helper = new Ibe_Object();
+			$this->view_action->helper = new Ibe_Object();
+
+			$this->view_application->modules_params = $this->modules_params;
+			$this->view_module->modules_params = $this->modules_params;
+			$this->view_controller->modules_params = $this->modules_params;
+			$this->view_action->modules_params = $this->modules_params;
     	} else {
     		$this->response = new Ibe_Object();
     	}

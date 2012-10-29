@@ -110,8 +110,9 @@ class Ibe_Request {
 		$view_app = $action->getViewApplication();
 		$view_mod = $action->getViewModule();
 		$view_ctr = $action->getViewController();
+		$view_act = $action->getViewAction();
 
-		$view = new Ibe_View($view_app, $view_mod, $view_ctr, $action);
+		$view = new Ibe_View($view_app, $view_mod, $view_ctr, $view_act);
 		$view->show($template);
 	}
 	

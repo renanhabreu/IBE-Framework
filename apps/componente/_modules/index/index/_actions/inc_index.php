@@ -5,7 +5,8 @@
 class IndexAction extends Ibe_Action{
         
     public function execute(Ibe_Request $req){        
-        $this->welcome = "Action Index";
+        $this->view_action->welcome = "Action Index";
+                
         
         return Ibe_View::APPLICATION;
     }

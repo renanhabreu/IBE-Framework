@@ -22,7 +22,7 @@ class Ibe_View extends Ibe_Object {
     private $view_action = NULL;
     private $context = NULL;
     
-    public function __construct(Ibe_Object $app = NULL,Ibe_Object $mod = NULL,Ibe_Object $ctr = NULL, Ibe_Action $act = NULL){
+    public function __construct(Ibe_Template $app = NULL,Ibe_Template $mod = NULL,Ibe_Template $ctr = NULL, Ibe_Template $act = NULL){
         $this->view_application = $app;
         $this->view_module      = $mod;
         $this->view_controller  = $ctr;
