@@ -2,6 +2,7 @@
 
 class Configure extends Ibe_Configure {
 
+#  	 protected $allowComponents = TRUE;
 #    protected $filters = array();
 #    protected $helpers = array();
 #    protected $modules_params = array();

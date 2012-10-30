@@ -4,10 +4,12 @@ class Configure extends stdClass{
 
     public $paths = array(
         "_extensions",
+    	'_components',
         "_filters",
         "_helpers",
         "_maps",
         "_modules",
+        "_modules/_views",
         "_plugins",
         "_logs",
         "_rsc",
