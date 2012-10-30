@@ -19,6 +19,7 @@ class Ibe_Configure{
      * @var array
      */
     protected $helpers = array();
+    protected $allowComponents = FALSE;
     protected $modules_params = array();
     protected $database_active = FALSE;
     protected $action_return_json = FALSE;
@@ -35,7 +36,11 @@ class Ibe_Configure{
     public function getHelpers(){
         return $this->helpers;
     }
-    
+
+    public function isAllowComponents(){
+    	return $this->allowComponents;
+    }
+        
     public function getModulesParams(){
         return $this->modules_params;
     }

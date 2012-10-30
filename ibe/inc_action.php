@@ -28,6 +28,7 @@ abstract class Ibe_Action extends Ibe_Object {
 		$this->configureDatabase();
 		$this->configureResponse();
 		$this->configureHelpers();
+		$this->configureComponents();
     }
     
     /**
@@ -235,5 +236,35 @@ abstract class Ibe_Action extends Ibe_Object {
     	}
     }
     
+
+    /**
+     * Carrega os componentes se eles nao forem desativado
+     * no arquivo de configuracao do modulo
+     */
+    private function configureComponents() {
+    	if ($this->configure->isAllowComponents()) {
+    		$var_moduleComponent = array();
+    		$var_component = array();
+    
+    		$moduleComponent = Ibe_Load::componentConfigureModule();
+    		if ($moduleComponent !== FALSE) {
+    			$moduleComponent->setAction($this->view_action)
+				    			->setController($this->view_controller)
+				    			->setModule($this->view_module)
+				    			->setApplication($this->view_application);
+    			$moduleComponent->configure();
+    		}
+    			
+    			
+    		$component = Ibe_Load::componentConfigureAction();
+    		if ($component !== FALSE) {
+	    		$component->setAction($this->view_action)
+				    	  ->setController($this->view_controller)
+				    	  ->setModule($this->view_module)
+				    	  ->setApplication($this->view_application);
+	    		$component->configure();
+    		}
+    	}
+    }
     
 }

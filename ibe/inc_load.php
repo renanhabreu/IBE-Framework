@@ -165,6 +165,109 @@ final class Ibe_Load{
         
         return $reflection->newInstance();
     }
+	
+    static public function component($name){
+    	$name = strtolower($name);
+    	$className = ucfirst($name).'Component';
+    	$path = "_components".DS."inc_".$name.".php";
+    	 
+    	if(!file_exists($path)){
+    		throw new Ibe_Exception_Load("O arquivo inc_".$name.".php nao foi encontrado");
+    	}else{
+    		include_once $path;
+    	}
+    	 
+    	/* @var $reflection ReflectionClass */
+    	$reflection = NULL;
+    	if (class_exists($className)) {
+    		$reflection = new ReflectionClass($className);
+    	} else {
+    		throw new Ibe_Exception_Load("O componente ".$className." nao foi encontrado");
+    	}
+    	 
+    	return $reflection;
+    }
+        
+    /**
+     * Retorna a classe de configuracao de componentes de tela
+     * @throws Ibe_Exception_Load
+     * @return Ibe_Component
+     */
+    static public function componentConfigureAction(){
+    	$context = Ibe_Context::getInstance();
+    	$actionName = strtolower($context->getAction()).'Component';
+    	$actionPath = '_modules'.DS.$context->getModule()
+						    	.DS.$context->getController()
+						    	.DS.'_components'
+    							.DS.'inc_'.$context->getAction().'.php';
+    
+    	if(!file_exists($actionPath)){
+    		$core_action = IBE_FRAMEWORK_PATH . 'default'. DS . $actionPath;
+    		//Ibe_Debug::error($core_action);
+    		if(file_exists($core_action)){
+    			include_once($core_action);
+    		}else{
+    			return FALSE;
+    		}
+    	}else{
+    		include_once($actionPath);
+    	}
+    	
+    
+    	$objAction = NULL;
+    	
+    	if(class_exists($actionName)){
+	    	//Instanciando um objeto Action
+	    	$clsAction = new ReflectionClass($actionName);
+	    	if ($clsAction->isSubclassOf('Ibe_Component')) {
+	    		//instancia um novo controlador
+	    		$objAction = $clsAction->newInstanceArgs();
+	    	} else {
+	    		$param =  array($actionName, 'Ibe_Component');
+	    		throw new Ibe_Exception_Load(Ibe_Exception::CLASSE_PAI_INVALIDA,$param);
+	    	}
+    	}
+    
+    	return $objAction;
+    }
+    
+
+    /**
+     * Retorna a classe de configuracao componentes de todas as tela
+     * @throws Ibe_Exception_Load
+     * @return Ibe_Component
+     */
+    static public function componentConfigureModule(){
+    	 
+    	$context = Ibe_Context::getInstance();
+    	$actionPath = '_modules'.DS.'inc_components.php';
+    
+    	if(!file_exists($actionPath)){
+    		$core_action = IBE_FRAMEWORK_PATH . 'default'. DS . $actionPath;
+    		//Ibe_Debug::error($core_action);
+    		if(file_exists($core_action)){
+    			include_once($core_action);
+    		}
+    		return FALSE;
+    	}else{
+    		include_once($actionPath);
+    	}
+    
+    	$objAction = NULL;
+    	if(class_exists('Components')){
+	    	//Instanciando um objeto Action
+	    	$clsAction = new ReflectionClass('Components');
+	    	if ($clsAction->isSubclassOf('Ibe_Component')) {
+	    		//instancia um novo controlador
+	    		$objAction = $clsAction->newInstanceArgs();
+	    	} else {
+	    		throw new Ibe_Exception_Load('A classe nao extende a classe Ibe_Component');
+	    	}
+    	}else{
+    		throw new Ibe_Exception_Load('A classe de configuracao de componentes [Components] nao existe');
+    	}
+    	return $objAction;
+    }
 }
 
 ?>

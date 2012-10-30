@@ -1,6 +1,6 @@
 <?php
 /**
- * Ação Index do controlador Index do Modulo Index
+ * Acao Index do controlador Index do Modulo Index
  */
 class IndexAction extends Ibe_Action{
         

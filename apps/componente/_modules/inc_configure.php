@@ -2,6 +2,7 @@
 
 class Configure extends Ibe_Configure {
 
+	protected $allowComponents = TRUE;
 #    protected $filters = array();
 #    protected $helpers = array();
 #    protected $modules_params = array();
@@ -13,9 +14,5 @@ class Configure extends Ibe_Configure {
 #    protected $database_pass = "";
 #    protected $database_schm = "";
 	 
-	 public function getComponentList(){
-	 	return array(
-	 		"a"		
-	 	);
-	 }
+	
 }

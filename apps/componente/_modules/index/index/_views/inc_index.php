@@ -1,3 +1,1 @@
-<?php
-    echo $this->welcome;
-?>
+<?php //->fix()?>
