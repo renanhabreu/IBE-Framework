@@ -112,6 +112,10 @@ class Ibe_Request {
 		$view_ctr = $action->getViewController();
 		$view_act = $action->getViewAction();
 
+		if($template == Ibe_View::JSON){
+			$view_act->response = $action->getResponse();
+		}
+		
 		$view = new Ibe_View($view_app, $view_mod, $view_ctr, $view_act);
 		$view->show($template);
 	}

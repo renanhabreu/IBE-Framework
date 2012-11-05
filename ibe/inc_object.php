@@ -23,12 +23,12 @@ class Ibe_Object{
      * @param array $vars
      * @return Ibe_Object
      */
-    public function __setVars($vars){
+    public function __setVars($vars,$over = FALSE){
 
-        if(sizeof($this->vars)){
+        if(sizeof($this->vars) || $over){
            $this->vars =  array_merge($this->vars,$vars);
         }
-        return $this;
+        return $this;;
     }
 	
     public function __set($name, $value) {

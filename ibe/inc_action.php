@@ -15,6 +15,7 @@ abstract class Ibe_Action extends Ibe_Object {
     protected $view_application = NULL;
     protected $view_module = NULL;
     protected $view_controller = NULL;
+    protected $view_action = NULL;
     protected $response = NULL;
     
     private $configure = NULL;
