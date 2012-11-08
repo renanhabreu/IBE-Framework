@@ -35,20 +35,26 @@ class Ibe_Context {
 
         $url = explode('/', rtrim($_SERVER['REQUEST_URI'], " \t\n\r\0/"));
         $index = array_search('index.php', $url);
-        $PORT = ':' . $_SERVER['SERVER_PORT'];
+        $PORT = '';
+        if($_SERVER['SERVER_PORT'] != 80){
+        	$PORT = ':' . $_SERVER['SERVER_PORT'];
+        }
 		$https = ($this->is_https)? 'https://':'http://';
 		
-        if (($_ = strstr($_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'], 'index.php', true))) {
-            $this->url_base = $https . $_ . $PORT;
-        } else {
-            $url_ = $_SERVER['SERVER_NAME'] . $PORT . $_SERVER['REQUEST_URI'];
-
-            if (($_ = strstr($url_, '?', true))) {
-                $url_ = $_;
-            }
-            $this->url_base = $https . $url_;
+		$url_complete = $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+		$url_ = strstr($url_complete, 'index.php', true);
+		
+		if(!$url_){
+			$url_ = $url_complete;
+		}
+		
+	    $url_ = $url_ . $PORT;
+        if (($_ = strstr($url_, '?', true))) {
+             $url_ = $_;
         }
-
+     	$this->url_base = $https . $url_ ;
+		//Dev_debug::error($this->url_base);
+		
         if ($index) {
             $slices = array_slice($url, 0, $index);
         } else {

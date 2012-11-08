@@ -16,9 +16,9 @@ final class Ibe_Template extends Ibe_Object{
 	
 	public function __construct($type = Ibe_View::APPLICATION){
 		$rsc = '_rsc';		
-		$this->js_path = $rsc. DS .  'js'. DS;  
-		$this->css_path = $rsc. DS .  'css'. DS;
-		$this->img_path = $rsc. DS .  'img'. DS;      
+		$this->js_path = $rsc'/js/';  
+		$this->css_path = $rsc.'/css/';
+		$this->img_path = $rsc.'/img/';      
 
 		$this->type = $type;
 	}
@@ -45,14 +45,14 @@ final class Ibe_Template extends Ibe_Object{
 			$type = $file[sizeof($file) - 1]; 
 			
 			if($type == 'js' || ($type != 'css' && $type == Ibe_Template::SCRIPT)){
-				$path = '_rsc/js/'.$filename;
+				$path = $this->js_path.$filename;
 				if(file_exists($path)){
 					echo '<script src="'.$url_base.$path.'"></script>';
 				}else{
 					throw new Ibe_Exception_Template('Script ['.$filename.'] tipo JS nao encontrado em repositorio');
 				}
 			}else if($type == 'css'||  $type == Ibe_Template::LINK || $type == Ibe_Template::ICON){			
-				$path = '_rsc/css/'.$filename;
+				$path =  $this->css_path.$filename;
 				if(file_exists($path)){
 					$rel = ($type == Ibe_Template::ICON)? 'icon':'stylesheet';
 					$t = ($type == Ibe_Template::ICON)? 'type="text/css"':'';
